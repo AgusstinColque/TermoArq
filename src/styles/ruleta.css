@@ -1,0 +1,70 @@
+/* Portado del prototipo ruleta-turbina-web-v1.html aportado por el usuario. */
+.ruleta { overflow-x: clip; min-height: 100vh; min-height: 100svh; background: #123e52; color: white; font-family: 'Century Gothic', Arial, sans-serif; }
+.ruleta__contenido { max-width: 834px; min-height: 1194px; min-height: max(1194px, 100svh); margin: auto; padding: 48px 48px 32px; display: flex; flex-direction: column; }
+.ruleta__logo { display: block; width: 330px; max-width: 100%; height: auto; filter: brightness(0) invert(1); }
+.ruleta h1 { font-size: 54px; letter-spacing: -1.8px; line-height: 1.08; margin: 42px 0 12px; font-weight: 700; }
+.ruleta h1:focus { outline: none; }
+.ruleta__intro { margin: 0; color: #bad3de; font-size: 21px; line-height: 1.5; }
+.ruleta__escenario { width: 100%; margin: 24px auto 16px; position: relative; isolation: isolate; }
+.ruleta__turbina { display: block; width: 100%; overflow: visible; }
+.ruleta__rotor { transform-origin: 350px 350px; }
+.ruleta__premio { transform-origin: 0 0; }
+.ruleta__aspa { transition: fill 180ms ease-out; }
+.ruleta__pie { margin-top: auto; }
+.ruleta__girar, .ruleta__finalizar { font: 700 26px 'Century Gothic', Arial, sans-serif; background: #ddeff5; color: #123e52; border: 0; border-radius: 10px; min-height: 72px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 20px; cursor: pointer; transition: transform 120ms ease-out; }
+.ruleta__girar:active:not(:disabled), .ruleta__finalizar:active { transform: scale(.98); }
+.ruleta__girar:focus-visible, .ruleta__finalizar:focus-visible { outline: 3px solid #9bbec8; outline-offset: 5px; }
+.ruleta__girar:disabled { cursor: wait; opacity: .8; }
+.ruleta__girar span { min-width: 150px; }
+.ruleta__girar svg { width: 28px; height: 28px; }
+.ruleta__nota { text-align: center; font-size: 14px; margin: 15px 0 0; color: #bad3de; }
+.ruleta__estado { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+.ruleta__error { color: #ddeff5; font-size: 18px; line-height: 1.5; margin: 0 0 16px; }
+.ruleta__resultado { position: fixed; inset: 0; margin: auto; width: calc(100% - 48px); max-width: 650px; max-height: calc(100vh - 48px); max-height: calc(100svh - 48px); padding: 42px; overflow: auto; overscroll-behavior: contain; border: 0; border-radius: 16px; background: #f5f4f0; color: #123e52; text-align: center; font-family: 'Century Gothic', Arial, sans-serif; }
+.ruleta__resultado::backdrop { background: rgba(9, 41, 54, .86); }
+.ruleta__resultado[open] { animation: turbina-resultado 220ms ease-out; }
+.ruleta__resultado:focus-visible { outline: 3px solid #427d9d; outline-offset: 4px; }
+.ruleta__resultado-marca { display: block; width: 30px; height: auto; margin: 0 auto 24px; }
+.ruleta__resultado-arte { width: 210px; height: 210px; margin: 20px auto 28px; border-radius: 50%; background: #dfeff7; display: grid; place-items: center; }
+.ruleta__resultado-arte svg { width: 170px; height: 170px; }
+.ruleta__resultado h2 { font-size: 36px; line-height: 1.2; margin: 0 0 14px; }
+.ruleta__resultado p { color: #365c6e; font-size: 20px; line-height: 1.5; margin: 0 0 28px; }
+.ruleta__finalizar { background: #123e52; color: white; }
+.ruleta__resultado .ruleta__resultado-nota { font-size: 13px; margin: 20px 0 0; color: #365c6e; }
+@keyframes turbina-resultado { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 600px) {
+  .ruleta__contenido { min-height: 100vh; min-height: 100svh; padding: 28px 24px; }
+  .ruleta__logo { width: 240px; }
+  .ruleta h1 { font-size: 36px; margin-top: 32px; }
+  .ruleta__intro { font-size: 16px; }
+  .ruleta__escenario { margin: 24px 0; }
+  .ruleta__girar, .ruleta__finalizar { font-size: 22px; min-height: 60px; }
+  .ruleta__resultado { padding: 28px; }
+  .ruleta__resultado h2 { font-size: 28px; }
+  .ruleta__resultado-arte { width: 160px; height: 160px; }
+  .ruleta__resultado-arte svg { width: 140px; height: 140px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ruleta__resultado[open] { animation: none; }
+  .ruleta__girar, .ruleta__finalizar, .ruleta__aspa { transition: none; }
+}
+.ruleta__marca { color: #123e52; transition: color 180ms ease-out; }
+.ruleta__escenario--activando .ruleta__marca { color: #34718d; }
+.ruleta__resultado-arte > svg > g:first-child { stroke-width: 2.1; }
+@media (prefers-reduced-motion: reduce) { .ruleta__marca { transition: none; } }
+
+/* Relieve frontal: carcasa fija, rotor y premios en capas independientes. */
+.ruleta__escenario--girando .ruleta__aspas { animation: turbina-velocidad 4800ms linear both; }
+.ruleta__rotor { will-change: auto; }
+.ruleta__escenario--girando .ruleta__rotor { will-change: transform; }
+@keyframes turbina-velocidad {
+  0%, 8%, 75%, 100% { filter: blur(0); }
+  25%, 42% { filter: blur(.7px); }
+}
+@media (prefers-reduced-motion: reduce) { .ruleta__aspas { animation: none !important; } }
+
+/* Aire frontal: capa transparente acotada al escenario, sin interceptar los toques. */
+.ruleta__viento { position: absolute; inset: -12%; pointer-events: none; overflow: hidden; contain: paint; }
+.ruleta__viento canvas { display: block; width: 100%; height: 100%; }
+
+

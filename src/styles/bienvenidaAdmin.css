@@ -1,0 +1,5 @@
+.bienvenida__cabecera { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.bienvenida__admin { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 44px; height: 44px; color: var(--color-acento-suave); border-radius: 6px; text-decoration: none; }
+.bienvenida__admin svg { width: 20px; height: 20px; }
+.bienvenida__admin:focus-visible { color: white; outline-offset: 2px; }
+@media (hover: hover) { .bienvenida__admin:hover { color: white; } }

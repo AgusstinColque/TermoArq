@@ -1,5 +1,6 @@
+import { preguntasProyecto } from '../data/preguntasProyecto'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { preguntasProyecto, validarProyecto, type CampoProyecto, type ErroresProyecto, type RespuestasProyecto } from '../lib/preguntasProyecto'
+import { validarProyecto, type CampoProyecto, type ErroresProyecto, type RespuestasProyecto } from '../domain/preguntasProyecto'
 
 interface PreguntasProyectoProps {
   respuestas: RespuestasProyecto

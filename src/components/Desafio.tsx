@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { desafioInicial } from '../lib/desafioInicial'
+import { desafioInicial } from '../data/desafioInicial'
 
 interface DesafioProps {
   respuesta: string

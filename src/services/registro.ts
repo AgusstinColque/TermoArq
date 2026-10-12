@@ -1,6 +1,6 @@
-import { obtenerClienteSupabase } from './supabase'
-import { type DatosContacto } from './datosContacto'
-import { type RespuestasProyecto } from './preguntasProyecto'
+import { obtenerClienteSupabase } from '../lib/supabase'
+import { type DatosContacto } from '../domain/datosContacto'
+import { type RespuestasProyecto } from '../domain/preguntasProyecto'
 
 export function nuevaSolicitud(): string {
   const bytes = crypto.getRandomValues(new Uint8Array(16))

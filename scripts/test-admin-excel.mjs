@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict'
+import ExcelJS from 'exceljs'
+import { generarExcelContactos } from '../src/services/exportacionContactos.ts'
+
+const visita = { id: '00000000-0000-4000-8000-000000000001', contacto_id: 'prueba', nombre: 'María', apellido: 'López Campos', correo: '=HYPERLINK("https://example.com")', telefono: '003881234567', iniciada_en: '2026-10-11T02:30:00Z', juego: 'ruleta', respuestas: { servicio: { pregunta: 'Servicio', respuesta: 'Aislaciones térmicas' }, proyecto: { pregunta: 'Proyecto', respuesta: 'Edificio o desarrollo inmobiliario' }, etapa: { pregunta: 'Etapa', respuesta: 'La obra está en ejecución' } } }
+const filas = Array.from({ length: 226 }, (_, i) => ({ ...visita, id: String(i), telefono: i === 1 ? '+54 388 1234567' : visita.telefono }))
+const filtros = { busqueda: 'María', desde: '', hasta: '', servicio: 'aislaciones', proyecto: '', etapa: '' }
+const bytes = await generarExcelContactos(filas, filtros, new Date('2026-10-12T02:00:00Z'))
+const libro = new ExcelJS.Workbook()
+await libro.xlsx.load(bytes)
+const hoja = libro.getWorksheet('Contactos del stand')
+assert.equal(hoja.rowCount, 232)
+assert.equal(hoja.getCell('E7').value, '003881234567')
+assert.equal(hoja.getCell('E8').value, '+54 388 1234567')
+assert.equal(hoja.getCell('E7').numFmt, '@')
+assert.equal(hoja.getCell('D7').type, ExcelJS.ValueType.String)
+assert.equal(hoja.getCell('D7').value, visita.correo)
+assert.equal(hoja.getCell('A7').value.toISOString(), '2026-10-10T23:30:00.000Z')
+assert.equal(hoja.getCell('A7').numFmt, 'dd/mm/yyyy hh:mm')
+assert.equal(hoja.getCell('A6').font.color.argb, 'FFFFFFFF')
+assert.equal(hoja.getCell('A6').fill.fgColor.argb, 'FF164863')
+assert.notEqual(hoja.getCell('A7').fill.fgColor.argb, hoja.getCell('A8').fill.fgColor.argb)
+assert.equal(hoja.views[0].ySplit, 6)
+assert.equal(hoja.views[0].showGridLines, false)
+assert.match(hoja.getCell('A3').value, /María.*Aislaciones térmicas/)
+assert.ok(hoja.getColumn('G').width >= 36)
+assert.equal(hoja.getTable('VisitasTermoarq').table.columns.length, 10)
+assert.equal(hoja.getCell('G7').alignment.wrapText, true)
+const vacio = new ExcelJS.Workbook()
+await vacio.xlsx.load(await generarExcelContactos([], filtros))
+assert.equal(vacio.getWorksheet(1).rowCount, 6)
+console.log('Excel: 226 visitas, filtros, fechas Argentina, teléfonos exactos, texto sin fórmulas, formato, tabla y encabezados fijos correctos.')

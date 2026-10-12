@@ -24,7 +24,7 @@ src/lib/supabase.ts prepara el cliente con inicialización diferida. La pantalla
 
 Incluye estructura de aplicación, paleta acordada, cliente Supabase y bienvenida basada en el mockup con el logo SVG auténtico y el video proporcionado. El logo se presenta en blanco mediante CSS, conservando el SVG original. La tipografía es provisional hasta recibir los archivos del cliente.
 
-Comenzar abre la pantalla de datos de contacto (paso 1 de 3), basada en el mockup vertical. Incluye nombre, apellido y un campo de teléfono o email con validaciones al salir del campo. La flecha permite volver y conserva el borrador únicamente en memoria de React: no se envía a Supabase hasta tocar Jugar; no se guarda en localStorage o sessionStorage. Recargar la página borra el borrador. Incluye además la pantalla de preguntas (paso 2 de 3). Incluye el desafío del paso 3 y su explicación. Incluye ruleta de demostración y cliente de registro mediante RPC. Todavía no incluye Misión Termoarq, login ni panel. El guardado remoto requiere ejecutar la migración de registro en Supabase.
+Comenzar abre la pantalla de datos de contacto (paso 1 de 3), basada en el mockup vertical. Incluye nombre, apellido y un campo de teléfono o email con validaciones al salir del campo. La flecha permite volver y conserva el borrador únicamente en memoria de React: no se envía a Supabase hasta tocar Jugar; no se guarda en localStorage o sessionStorage. Recargar la página borra el borrador. Incluye además la pantalla de preguntas (paso 2 de 3). Incluye el desafío del paso 3 y su explicación. Incluye ruleta de demostración y cliente de registro mediante RPC. Todavía no incluye Misión Termoarq. El login y el panel de administración están implementados en `/admin`; su activación remota se detalla en [ADMIN.md](ADMIN.md). El guardado remoto requiere ejecutar la migración de registro en Supabase.
 
 Las migraciones y las pruebas de permisos están en supabase/. La migración inicial en inglés y el renombrado al español se mantienen en orden.
 
@@ -34,7 +34,7 @@ La compilación apunta inicialmente a Chromium 79 como base conservadora, hasta 
 
 ## Despliegue previsto
 
-Vercel: comando de compilación npm run build, directorio de salida dist. Configurar las mismas variables públicas en el entorno de despliegue. Las rutas del panel y sus reglas de navegación se incorporarán al implementar esa parte.
+Vercel: comando de compilación npm run build, directorio de salida dist. Configurar las mismas variables públicas en el entorno de despliegue. `vercel.json` incluye la regla de navegación de la SPA para abrir y recargar `/admin` directamente.
 
 ## Referencias
 
@@ -60,7 +60,7 @@ Verificado en Chrome: autoplay, reinicio real al final del bucle, reproducción 
 
 ## Datos de contacto
 
-- Componente: src/components/DatosCliente.tsx. Validaciones: src/lib/datosContacto.ts.
+- Componente: src/components/DatosCliente.tsx. Validaciones: src/domain/datosContacto.ts.
 - Se muestra una sola casilla inicialmente desmarcada: Acepto los términos y condiciones, con un texto desplegable en borrador sobre el estudio. Se retiró la opción de promociones; esta aceptación no se registra como autorización de marketing. Falta completar y revisar con Termoarq la identidad del responsable, domicilio, contacto para derechos, destinatarios, plazo y condiciones de recolección.
 - El formulario de datos permite continuar a preguntas en vistaPrevia, después de validar los campos y la casilla. Esta navegación local no aprueba el aviso; el guardado se solicita al tocar Jugar y registra versiones identificadas como borrador en las pruebas. Fuera de vistaPrevia sigue requiriendo privacidadAprobada y onContinuar. El uso de datos para promociones queda pendiente de definir antes de implementar los envíos.
 - El teléfono acepta código de país opcional y separadores habituales, con entre 7 y 15 dígitos. El email exige una estructura básica válida; esto no confirma la existencia de la casilla o la titularidad del contacto.
@@ -70,7 +70,7 @@ Verificado en Chrome: autoplay, reinicio real al final del bucle, reproducción 
 
 ## Preguntas del proyecto
 
-- Pantalla: src/components/PreguntasProyecto.tsx. Catálogo de ejemplo y validación: src/lib/preguntasProyecto.ts.
+- Pantalla: src/components/PreguntasProyecto.tsx. Catálogo de ejemplo: src/data/preguntasProyecto.ts. Validación: src/domain/preguntasProyecto.ts.
 - Tres preguntas del mockup: servicio, tipo de proyecto y etapa. Se mantienen Climatización, Vivienda y Estoy planificando como opciones; ninguna respuesta empieza seleccionada.
 - El usuario autorizó ampliar las opciones con ejemplos. Los servicios se basan en el sitio oficial: https://www.termoarq.com.ar/ y https://www.termoarq.com.ar/servicios_det.php?slug=servicios-de-ingenieria-y-construccion-hvac. Los tipos de proyecto y etapas adicionales son propuestas para revisar, no catálogo aprobado.
 - Datos y selecciones se conservan en memoria al retroceder; Jugar solicita el guardado de contacto y respuestas. Recargar reinicia la vista previa.
@@ -80,7 +80,7 @@ Verificado en Chrome: autoplay, reinicio real al final del bucle, reproducción 
 
 ## Desafío antes de jugar
 
-- Componente: src/components/Desafio.tsx. Pregunta de ejemplo: src/lib/desafioInicial.ts, reproducida del mockup.
+- Componente: src/components/Desafio.tsx. Pregunta de ejemplo: src/data/desafioInicial.ts, reproducida del mockup.
 - Tres opciones de respuesta excluyentes, ninguna premarcada. Responder sin elegir muestra un error y enfoca la primera opción.
 - Respuesta incorrecta: No exactamente y explicación. Respuesta correcta: ¡Exactamente! y la misma explicación educativa. Ambos casos muestran Jugar; equivocarse no excluye al visitante.
 - Jugar intenta guardar el registro mediante Supabase y abre la ruleta solo tras una confirmación válida. La flecha permite volver a la pregunta o a las preguntas comerciales, conservando las selecciones en memoria.
@@ -112,7 +112,7 @@ Verificado en Chrome: destino e interrupción del scroll, navegación entre form
 Con `npm run dev`, abrir `http://localhost:5173/?pantalla=ruleta`. Permite revisar y girar la ruleta sin completar formularios ni guardar registros en Supabase. Finalizar reinicia la ruleta para repetir la prueba. La URL habitual conserva el recorrido completo. Este acceso se desactiva en la compilación de producción.
 
 ### Ruleta basada en el HTML aportado
-La referencia vigente es `ruleta-turbina-web-v1.html`, aportada por el usuario. Se portaron a React las seis aspas originales, las posiciones e íconos SVG, la composición, los colores, la activación de 180 ms, el modal con ilustración y marca. El acabado visual y el movimiento se actualizaron luego al relieve 2.5D aprobado. La geometría exacta se conserva en `src/lib/ruletaDiseno.ts`; los estilos están aislados en `src/styles/ruleta.css`.
+La referencia vigente es `ruleta-turbina-web-v1.html`, aportada por el usuario. Se portaron a React las seis aspas originales, las posiciones e íconos SVG, la composición, los colores, la activación de 180 ms, el modal con ilustración y marca. El acabado visual y el movimiento se actualizaron luego al relieve 2.5D aprobado. La geometría exacta se conserva en `src/data/ruletaDiseno.ts`; los estilos están aislados en `src/styles/ruleta.css`.
 Se mantienen las correcciones solicitadas: alternancia uniforme hasta el resultado, resaltado únicamente de la ganadora y nombres/íconos derechos mediante contrarrotación. El sorteo sigue usando crypto.getRandomValues con la misma probabilidad para los seis ejemplos. Con movimiento reducido se conserva un giro visible de 3,2 segundos sin desenfoque; el HTML original entregaba el resultado en 180 ms. El resultado se abre 700 ms después de detenerse. Finalizar sigue el recorrido de la aplicación: bienvenida en el uso normal, nueva ruleta en el acceso de desarrollo. No guarda resultados ni asigna entregas reales.
 Verificado en Chrome: las seis posiciones ganadoras quedan bajo el puntero, orientación durante el giro, aire, modal, bloqueo, reinicio y ausencia de desbordes en 834×1194, 1080×1920 y 390×844. Falta comprobar el rendimiento en la LG física.
 
@@ -125,3 +125,23 @@ Vista frontal con carcasa biselada, cavidad oscura, espesor bajo las aspas y tap
 Verificado en Chrome: transparencia inicial y final, estelas visibles durante el giro, límite de resolución, ausencia de animación pendiente al terminar, reinicio y cero desbordes/errores. La fluidez final debe comprobarse en la LG física.
 
 El aire se reforzó tras la revisión visual: estelas más largas y anchas, mayor contraste y expansión fuera de la carcasa. Usa hasta 30 estelas (24 en pantallas pequeñas, 12 con movimiento reducido), manteniendo el reloj del giro y la limpieza al finalizar. El contenedor recorta el desborde horizontal de las ráfagas.
+
+## Organización del código
+
+- `src/components`: pantallas, interacción y animación de la interfaz.
+- `src/styles`: estilos de las pantallas.
+- `src/services`: operaciones de la aplicación y comunicación con el backend, como el registro de visitas.
+- `src/domain`: tipos, validaciones y reglas de negocio, incluido el sorteo de la ruleta de demostración.
+- `src/data`: preguntas, contenido del desafío y geometría SVG de la ruleta.
+- `src/hooks`: hooks de React reutilizables, como el desplazamiento.
+- `src/lib`: infraestructura compartida, como el cliente de Supabase.
+
+Los componentes consumen servicios para guardar datos y funciones de dominio para validar o resolver reglas. Los catálogos de esta etapa siguen siendo ejemplos estáticos. Las reglas que requieren garantías del servidor se conservan en las migraciones de Supabase.
+
+## Panel de administración
+
+Abrir `/admin` para ingresar con una cuenta de personal autorizada. Incluye contactos y respuestas comerciales por visita, búsqueda, filtros por fechas y respuestas, paginación, exportación Excel (.xlsx) de todos los resultados filtrados y configuración del registro y juego. La exportación fue autorizada e implementada; no implica que la conexión remota esté verificada. En computadora se usa tabla y navegación lateral; en celular, lista con respuestas desplegables y navegación horizontal. Se conservan el logo auténtico, Arial y el azul de Termoarq.
+
+[ADMIN.md](ADMIN.md) reúne las funciones, activación de la migración, habilitación de cuentas y despliegue. `src/components/admin`, `src/styles/admin.css`, `src/services/admin.ts`, `src/domain/admin.ts` y `src/hooks/useSesionAdmin.ts` contienen la implementación. El contexto visual de esta superficie se registra en [.impeccable/briefs/admin.md](.impeccable/briefs/admin.md).
+
+Verificados `npm run build`, `npm run lint`, `npm run test:db` y `npm run test:admin`. Con API simulada se comprobaron login, autorización, sesión al recargar, cierre de sesión, filtros, paginación, Excel completo de 226 visitas, error y reintento, guardado y conflictos de configuración; sin errores de JavaScript ni desborde horizontal a 1440 y 390 px. Las capturas están en `.impeccable/review/`. Estas pruebas locales no confirman migraciones ni cuentas en Supabase remoto.

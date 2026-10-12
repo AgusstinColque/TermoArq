@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { validarDatos, type DatosContacto, type Campo, type Errores } from '../lib/datosContacto'
+import { validarDatos, type DatosContacto, type Campo, type Errores } from '../domain/datosContacto'
 interface DatosClienteProps {
   datos: DatosContacto
   onCambiar: (datos: DatosContacto) => void

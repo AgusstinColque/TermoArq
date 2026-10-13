@@ -2,9 +2,9 @@ import assert from 'node:assert/strict'
 import ExcelJS from 'exceljs'
 import { generarExcelContactos } from '../src/services/exportacionContactos.ts'
 
-const visita = { id: '00000000-0000-4000-8000-000000000001', contacto_id: 'prueba', nombre: 'María', apellido: 'López Campos', correo: '=HYPERLINK("https://example.com")', telefono: '003881234567', iniciada_en: '2026-10-11T02:30:00Z', juego: 'ruleta', respuestas: { servicio: { pregunta: 'Servicio', respuesta: 'Aislaciones térmicas' }, proyecto: { pregunta: 'Proyecto', respuesta: 'Edificio o desarrollo inmobiliario' }, etapa: { pregunta: 'Etapa', respuesta: 'La obra está en ejecución' } } }
+const visita = { id: '00000000-0000-4000-8000-000000000001', contacto_id: 'prueba', nombre: 'María', apellido: 'López Campos', correo: '=HYPERLINK("https://example.com")', telefono: '003881234567', iniciada_en: '2026-10-11T02:30:00Z', juego: 'ruleta', respuestas: { servicio: { pregunta: 'Servicio', respuesta: 'Climatización' }, proyecto: { pregunta: 'Proyecto', respuesta: 'Edificio o desarrollo inmobiliario' }, etapa: { pregunta: 'Etapa', respuesta: 'La obra está en ejecución' } } }
 const filas = Array.from({ length: 226 }, (_, i) => ({ ...visita, id: String(i), telefono: i === 1 ? '+54 388 1234567' : visita.telefono }))
-const filtros = { busqueda: 'María', desde: '', hasta: '', servicio: 'aislaciones', proyecto: '', etapa: '' }
+const filtros = { busqueda: 'María', desde: '', hasta: '', servicio: 'climatizacion', proyecto: '', etapa: '' }
 const bytes = await generarExcelContactos(filas, filtros, new Date('2026-10-12T02:00:00Z'))
 const libro = new ExcelJS.Workbook()
 await libro.xlsx.load(bytes)
@@ -22,7 +22,7 @@ assert.equal(hoja.getCell('A6').fill.fgColor.argb, 'FF164863')
 assert.notEqual(hoja.getCell('A7').fill.fgColor.argb, hoja.getCell('A8').fill.fgColor.argb)
 assert.equal(hoja.views[0].ySplit, 6)
 assert.equal(hoja.views[0].showGridLines, false)
-assert.match(hoja.getCell('A3').value, /María.*Aislaciones térmicas/)
+assert.match(hoja.getCell('A3').value, /María.*Climatización/)
 assert.ok(hoja.getColumn('G').width >= 36)
 assert.equal(hoja.getTable('VisitasTermoarq').table.columns.length, 10)
 assert.equal(hoja.getCell('G7').alignment.wrapText, true)

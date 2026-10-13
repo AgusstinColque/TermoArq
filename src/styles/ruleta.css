@@ -1,7 +1,7 @@
 /* Portado del prototipo ruleta-turbina-web-v1.html aportado por el usuario. */
 .ruleta { overflow-x: clip; min-height: 100vh; min-height: 100svh; background: #123e52; color: white; font-family: 'Century Gothic', Arial, sans-serif; }
 .ruleta__contenido { max-width: 834px; min-height: 1194px; min-height: max(1194px, 100svh); margin: auto; padding: 48px 48px 32px; display: flex; flex-direction: column; }
-.ruleta__logo { display: block; width: 330px; max-width: 100%; height: auto; filter: brightness(0) invert(1); }
+.ruleta__logo { display: block; width: 330px; max-width: 100%; height: auto; }
 .ruleta h1 { font-size: 54px; letter-spacing: -1.8px; line-height: 1.08; margin: 42px 0 12px; font-weight: 700; }
 .ruleta h1:focus { outline: none; }
 .ruleta__intro { margin: 0; color: #bad3de; font-size: 21px; line-height: 1.5; }

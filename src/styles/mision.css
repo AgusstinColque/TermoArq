@@ -1,0 +1,67 @@
+.mision { --fondo-mision: #164863; min-height: 100svh; margin: 0; color: #fff; background: var(--fondo-mision); font-family: 'Century Gothic', Arial, sans-serif; }
+.mision ::selection { color: #164863; background: #dfeff7; }
+.mision__pagina { position: relative; width: min(100%, 834px); margin: auto; aspect-ratio: 1049 / 1500; container-type: inline-size; overflow: hidden; }
+.mision__cabecera { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.mision__cabecera img { position: absolute; left: 12%; top: 2.8%; width: 35%; height: auto; }
+.mision__volver { position: absolute; left: 4%; top: 3%; width: 6%; height: 4%; min-height: 0; padding: 0; border: 0; background: transparent; color: white; cursor: pointer; pointer-events: auto; }
+.mision__volver svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2; }
+.mision h1 { position: absolute; left: 5.9%; top: 9.7%; z-index: 2; margin: 0; font-size: 6.4cqw; line-height: 1.1; letter-spacing: -.025em; }
+.mision__progreso { position: absolute; left: 5.9%; top: 15.5%; width: 88.2%; z-index: 2; display: flex; align-items: center; gap: 2.6cqw; font-size: 2.6cqw; line-height: 1.3; color: #dfeff7; white-space: nowrap; }
+.mision__progreso svg { width: 17%; height: 3.7cqw; fill: #164863; stroke: #9bbec8; stroke-width: 2; flex: none; }
+.mision__paso-activo { fill: #dfeff7; stroke: #dfeff7; }
+.mision__progreso .mision__check { stroke: #164863; fill: none; stroke-width: 3; }
+.mision__escena, .mision__camara { position: absolute; inset: 0; pointer-events: none; }
+.mision__casa { display: block; width: 100%; height: 100%; object-fit: fill; }
+.mision__resuelta { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; opacity: 0; transition: opacity .45s ease-out; }
+.mision--fresca .mision__resuelta { opacity: 1; }
+.mision__calor { position: absolute; left: 43%; top: 33%; width: 17%; height: 14%; pointer-events: none; transition: opacity .2s; }
+.mision__calor path { fill: none; stroke: #ffdda3; stroke-width: 3; stroke-linecap: round; animation: heat-rise 2.7s ease-in-out infinite; }
+.mision__calor path:nth-child(2) { animation-delay: -.9s; }
+.mision__calor path:nth-child(3) { animation-delay: -1.8s; }
+@keyframes heat-rise { 0% { opacity: .25; transform: translateY(12px); } 50% { opacity: .95; } 100% { opacity: .15; transform: translateY(-10px); } }
+.mision--fresca .mision__calor { opacity: 0; }
+.mision__aire { position: absolute; left: 45%; top: 29%; width: 19%; height: 13%; pointer-events: none; opacity: 0; }
+.mision__aire path { fill: none; stroke: #bfeffc; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 26 90; animation: air-flow 1.8s linear infinite; }
+.mision__aire path:nth-child(2) { animation-delay: -.6s; }
+.mision__aire path:nth-child(3) { animation-delay: -1.2s; }
+.mision--fresca .mision__aire { opacity: .8; transition: opacity .45s .35s; }
+@keyframes air-flow { to { stroke-dashoffset: -116; } }
+.mision__decision { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.mision__decision h2 { position: absolute; left: 5.9%; top: 60%; width: 88.2%; margin: 0; font-size: 6.3cqw; font-weight: 700; line-height: 1.03; letter-spacing: -.025em; }
+.mision__decision > p:not(.mision__pista) { position: absolute; left: 6%; top: 68.5%; width: 88%; margin: 0; font-size: 3.5cqw; line-height: 1.35; color: #dfeff7; }
+.mision__pista { position: absolute; left: 6%; top: 69.7%; width: 88%; margin: 0; font-size: 2.2cqw; line-height: 1.3; background: #164863; color: #dfeff7; }
+.mision__pista:empty { display: none; }
+.mision__opciones button { position: absolute; left: 5.9%; width: 88.2%; height: 6.9%; min-height: 0; padding: 0 4%; border: 0; border-radius: 1.2cqw; background: #f5f4f0; color: #164863; display: flex; align-items: center; gap: 3cqw; text-align: left; font: 700 3.8cqw 'Century Gothic', Arial, sans-serif; cursor: pointer; pointer-events: auto; transition: transform .12s ease-out, background .15s ease-out; }
+.mision__opciones button:nth-child(1) { top: 72.6%; }
+.mision__opciones button:nth-child(2) { top: 80.5%; }
+.mision__opciones button:nth-child(3) { top: 88.5%; }
+.mision__opciones .mision__icono { width: 12%; height: 5.5cqw; flex: none; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mision__icono-acento { stroke: #ef8f19; }
+.mision__opciones button > span { border-left: 1px solid #9bbec8; padding-left: 4%; }
+.mision__flecha { width: 3cqw; height: 3cqw; margin-left: auto; flex: none; fill: none; stroke: currentColor; stroke-width: 2.5; }
+.mision__opciones button:active, .mision__siguiente:active { transform: scale(.985); }
+.mision__opciones button.seleccionada { background: #dfeff7; outline: 3px solid #9bbec8; }
+.mision__opciones button:disabled { cursor: default; }
+.mision button:focus-visible { outline: 3px solid #dfeff7; outline-offset: 4px; }
+.mision__siguiente { position: absolute; left: 6%; top: 86.7%; width: 88%; height: 8.2%; min-height: 0; padding: 0 4%; border: 0; border-radius: 1cqw; background: #dfeff7; color: #164863; font: 700 3.7cqw 'Century Gothic', Arial, sans-serif; display: flex; align-items: center; justify-content: center; cursor: pointer; pointer-events: auto; }
+.mision__siguiente .mision__flecha { position: absolute; right: 4%; }
+.mision__decision .mision__titulo-resuelto { top: 64%; font-size: 7.1cqw; display: flex; align-items: flex-start; gap: 3cqw; }
+.mision__titulo-resuelto svg { width: 9cqw; height: 9cqw; flex: none; fill: #dfeff7; }
+.mision__titulo-resuelto svg path { fill: none; stroke: #164863; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.mision--fresca .mision__decision > p:not(.mision__pista) { top: 76.5%; font-size: 4.5cqw; }
+.mision footer { position: absolute; top: 96.6%; left: 6%; width: 88%; color: #dfeff7; text-align: center; font-size: 1.9cqw; line-height: 1.3; }
+.mision__imagen-error { position: absolute; left: 6%; top: 40%; width: 88%; padding: 2cqw; background: #164863; font-size: 3cqw; }
+.mision--fin .mision__decision { background: #164863; pointer-events: auto; }
+.mision--fin .mision__decision h2 { top: 35%; font-size: 5cqw; text-align: center; }
+.mision--fin .mision__decision > p:not(.mision__pista) { top: 43%; font-size: 3cqw; text-align: center; }
+.mision--fin .mision__siguiente { top: 57%; height: 7%; }
+@media (hover: hover) { .mision__opciones button:hover, .mision__siguiente:hover { background: #dfeff7; } }
+@media (prefers-reduced-motion: reduce) { .mision * { animation: none !important; transition: none !important; } .mision__calor path { opacity: .5; } .mision__aire path { stroke-dasharray: none; } }
+
+
+/* Ondas continuas de la referencia, debajo de los trazos animados. */
+.mision__ondas-fijas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; fill: none; stroke-width: 5; stroke-linecap: round; }
+.mision__ondas-fijas--calor { stroke: url(#mision-calor-fijo); opacity: 1; filter: drop-shadow(0 0 2px #ffd57a99); transition: opacity .2s; }
+.mision--fresca .mision__ondas-fijas--calor { opacity: 0; }
+.mision__ondas-fijas--aire { stroke: url(#mision-aire-fijo); opacity: 0; filter: drop-shadow(0 0 2px #a6eaff99); }
+.mision--fresca .mision__ondas-fijas--aire { opacity: 1; transition: opacity .45s .35s; }

@@ -43,7 +43,7 @@ export function PreguntasProyecto({ respuestas, onCambiar, onVolver, onContinuar
           <span>Paso 2 de 3</span><span className="datos-cliente__paso datos-cliente__paso--activo" /><span className="datos-cliente__paso datos-cliente__paso--activo" /><span className="datos-cliente__paso" />
         </div>
       </div>
-      <img className="datos-cliente__logo" src="/brand/termoarq-logo.svg" alt="Termoarq, constructora termomecánica" width="300" height="52" />
+      <img className="datos-cliente__logo" src="/brand/termoarq-logo-blanco.svg" alt="Termoarq, constructora termomecánica" width="300" height="53" />
       <h1 id="preguntas-titulo" ref={tituloRef} tabIndex={-1}>Contanos un poco más</h1>
       <p className="datos-cliente__intro">Respondé estas tres preguntas.</p>
       <form className="datos-cliente__formulario" ref={formularioRef} noValidate onSubmit={continuar}>

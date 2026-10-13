@@ -6,8 +6,13 @@ import { ConfiguracionAdmin } from './ConfiguracionAdmin'
 import { CuentaAdmin } from './CuentaAdmin'
 import '../../styles/admin.css'
 
+
+function IconoAdmin({ tipo }: { tipo: 'contactos' | 'configuracion' | 'cuenta' }) {
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{tipo === 'contactos' ? <><circle cx="9" cy="8" r="3"/><path d="M3 20v-3a6 6 0 0 1 12 0v3M16 5a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 5"/></> : tipo === 'configuracion' ? <><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="16" cy="17" r="3"/></> : <><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/></>}</svg>
+}
+
 export function MarcaAdmin() {
-  return <img className="admin-marca" src="/brand/termoarq-logo.svg" alt="Termoarq, constructora termomecánica" width="300" height="52" />
+  return <img className="admin-marca" src="/brand/termoarq-logo-blanco.svg" alt="Termoarq, constructora termomecánica" width="300" height="53" />
 }
 
 function LoginAdmin({ errorSesion, onReintentar }: { errorSesion: string; onReintentar: () => void }) {
@@ -66,14 +71,15 @@ export default function AdminApp() {
     <a className="admin-saltar" href="#admin-contenido">Ir al contenido</a>
     <header className="admin-cabecera">
       <a className="admin-marca-enlace" href="/admin" aria-label="Inicio del panel Termoarq"><MarcaAdmin /></a>
-      <div className="admin-cuenta"><span title={sesion.usuario.email}>{sesion.usuario.email}</span><button type="button" className="admin-boton" disabled={saliendo} onClick={() => { void salir() }}>{saliendo ? 'Saliendo…' : 'Cerrar sesión'}</button></div>
+      <div className="admin-cuenta"><span className="admin-avatar" aria-hidden="true">{sesion.usuario.email?.slice(0, 1).toUpperCase()}</span><span title={sesion.usuario.email}>{sesion.usuario.email}</span><button type="button" className="admin-boton" disabled={saliendo} onClick={() => { void salir() }}>{saliendo ? 'Saliendo…' : 'Cerrar sesión'}</button></div>
     </header>
     <div className="admin-cuerpo">
       <nav className="admin-navegacion" aria-label="Panel de administración">
-        <button type="button" aria-current={seccion === 'contactos' ? 'page' : undefined} onClick={() => setSeccion('contactos')}>Contactos</button>
-        <button type="button" aria-current={seccion === 'configuracion' ? 'page' : undefined} onClick={() => setSeccion('configuracion')}>Configuración</button>
-        <button type="button" aria-current={seccion === 'cuenta' ? 'page' : undefined} onClick={() => setSeccion('cuenta')}>Mi cuenta</button>
+        <button type="button" aria-current={seccion === 'contactos' ? 'page' : undefined} onClick={() => setSeccion('contactos')}><IconoAdmin tipo="contactos" />Contactos</button>
+        <button type="button" aria-current={seccion === 'configuracion' ? 'page' : undefined} onClick={() => setSeccion('configuracion')}><IconoAdmin tipo="configuracion" />Juegos y registro</button>
+        <button type="button" aria-current={seccion === 'cuenta' ? 'page' : undefined} onClick={() => setSeccion('cuenta')}><IconoAdmin tipo="cuenta" />Mi cuenta</button>
         <a href="/" target="_blank" rel="noreferrer">Abrir experiencia <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M14 4h6v6m0-6L10 14M10 4H4v16h16v-6" /></svg><span className="admin-sr">en una pestaña nueva</span></a>
+        <div className="admin-nav-pie"><strong>Panel de gestión</strong><span>Experiencia del stand</span></div>
       </nav>
       <main id="admin-contenido" className="admin-contenido" tabIndex={-1}>
         {errorSalida && <p className="admin-error" role="alert">{errorSalida}</p>}

@@ -3,9 +3,11 @@ import '../styles/bienvenidaAdmin.css'
 
 interface BienvenidaProps {
   onComenzar?: () => void
+  cargando?: boolean
+  error?: string
 }
 
-export function Bienvenida({ onComenzar }: BienvenidaProps) {
+export function Bienvenida({ onComenzar, cargando = false, error = '' }: BienvenidaProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [videoNoDisponible, setVideoNoDisponible] = useState(false)
 
@@ -61,10 +63,10 @@ export function Bienvenida({ onComenzar }: BienvenidaProps) {
       <header className="bienvenida__cabecera">
         <img
           className="bienvenida__logo"
-          src="/brand/termoarq-logo.svg"
+          src="/brand/termoarq-logo-blanco.svg"
           alt="Termoarq, constructora termomecánica"
           width="300"
-          height="52"
+          height="53"
         />
         <a className="bienvenida__admin" href="/admin" aria-label="Ingresar al panel de administración" title="Acceso del equipo">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -109,13 +111,15 @@ export function Bienvenida({ onComenzar }: BienvenidaProps) {
           className="bienvenida__comenzar"
           type="button"
           onClick={onComenzar}
-          disabled={!onComenzar}
+          disabled={!onComenzar || cargando}
+          aria-busy={cargando}
         >
-          <span>Comenzar</span>
+          <span>{cargando ? 'Conectando…' : 'Comenzar'}</span>
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 12h16m-6-6 6 6-6 6" />
           </svg>
         </button>
+        {error && <p className="bienvenida__error" role="alert">{error}</p>}
       </section>
     </main>
   )

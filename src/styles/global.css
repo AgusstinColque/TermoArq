@@ -42,8 +42,7 @@ button { min-height: 48px; }
   max-width: 520px;
   min-width: 190px;
   height: auto;
-  /* El SVG original es azul; la presentación blanca conserva sus trazos. */
-  filter: brightness(0) invert(1);
+
 }
 
 .bienvenida__multimedia {
@@ -79,7 +78,7 @@ button { min-height: 48px; }
       transparent calc(100% - var(--fundido-inferior)),
       var(--color-principal) 100%
     ),
-    rgba(0, 0, 0, 0.40);
+    rgba(0, 0, 0, 0.45);
   pointer-events: none;
 }
 .bienvenida__contenido {
@@ -200,7 +199,7 @@ button { min-height: 48px; }
 .datos-cliente__progreso { display: flex; align-items: center; gap: clamp(8px, 1.3vw, 16px); font-size: clamp(12px, 1.5vw, 20px); font-weight: 600; }
 .datos-cliente__paso { width: clamp(20px, 4.6vw, 60px); height: 5px; background: var(--color-acento-suave); }
 .datos-cliente__paso--activo { background: var(--color-principal); }
-.datos-cliente__logo { width: 50%; min-width: 190px; max-width: 460px; height: auto; margin-top: clamp(20px, 3vw, 40px); }
+.datos-cliente__logo { width: 50%; min-width: 190px; max-width: 460px; height: auto; margin-top: clamp(20px, 3vw, 40px); filter: brightness(0) saturate(100%) invert(22%) sepia(39%) saturate(1115%) hue-rotate(156deg) brightness(94%) contrast(92%); }
 .datos-cliente h1 { margin: clamp(32px, 5vw, 64px) 0 0; font-size: clamp(28px, 4.6vw, 60px); line-height: 1.15; letter-spacing: -.025em; }
 .datos-cliente h1:focus { outline: none; }
 .datos-cliente__intro { margin: 12px 0 0; font-size: clamp(16px, 2vw, 28px); line-height: 1.5; color: var(--color-acento); }

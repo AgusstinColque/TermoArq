@@ -3,3 +3,4 @@
 .bienvenida__admin svg { width: 20px; height: 20px; }
 .bienvenida__admin:focus-visible { color: white; outline-offset: 2px; }
 @media (hover: hover) { .bienvenida__admin:hover { color: white; } }
+.bienvenida__error { font-size: clamp(14px, 2vw, 18px) !important; line-height: 1.4; padding: 12px 16px; background: #fff1f0; color: #8b2925 !important; border-radius: 8px; }

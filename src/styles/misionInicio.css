@@ -1,0 +1,31 @@
+.mision-inicio .mision__pagina { aspect-ratio: 543 / 716; }
+.mision-inicio .mision__cabecera img { left: 9.2%; top: 2.1%; width: 38%; }
+.mision-inicio h1 { left: 9.2%; top: 11%; font-size: 7.3cqw; }
+.mision-inicio__lema { position: absolute; left: 9.2%; top: 17.2%; margin: 0; color: #dfeff7; font-size: 3.7cqw; }
+.mision-inicio__mapa { position: absolute; left: 1%; top: 21.5%; width: 98%; aspect-ratio: 3 / 2; }
+.mision-inicio__mapa > img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.mision-inicio__punto { position: absolute; transform: translate(-50%, -50%); width: 8cqw; height: 8cqw; min-width: 44px; min-height: 44px; padding: 0; border: 0; background: transparent; color: #164863; display: grid; place-items: center; cursor: pointer; }
+.mision-inicio__punto span { display: grid; place-items: center; width: 4.5cqw; height: 4.5cqw; min-width: 24px; min-height: 24px; border-radius: 50%; background: #dfeff7; box-shadow: 0 3px 8px #062d4040; transition: transform .18s ease-out; }
+.mision-inicio__punto svg { width: 70%; height: 70%; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+.mision-inicio__punto--living { left: 38%; top: 52%; }
+.mision-inicio__punto--living span { width: 5.8cqw; height: 5.8cqw; min-width: 30px; min-height: 30px; color: white; background: #164863; border: 2px solid #dfeff7; }
+.mision-inicio__punto--dormitorio { left: 55%; top: 27%; }
+.mision-inicio__punto--lavadero { left: 80%; top: 51%; }
+.mision-inicio__calor { position: absolute; left: 43%; top: 48%; width: 14%; height: 18%; fill: none; stroke: #fff0c0; stroke-width: 3; stroke-linecap: round; pointer-events: none; }
+.mision-inicio__calor path { animation: heat-rise 2.7s ease-in-out infinite; }
+.mision-inicio__calor path:nth-child(2) { animation-delay: -.9s; }
+.mision-inicio__calor path:nth-child(3) { animation-delay: -1.8s; }
+.mision-inicio__guia { position: absolute; left: 34%; top: 49%; width: 15%; height: 22%; fill: none; stroke: #dfeff7; stroke-width: 2.5; pointer-events: none; }
+.mision-inicio__tarjeta { position: absolute; left: 9.2%; top: 71.8%; width: 83.8%; min-height: 13%; box-sizing: border-box; padding: 2.5cqw 3cqw; display: flex; align-items: center; gap: 3cqw; background: #f5f4f0; color: #164863; border-radius: 1.2cqw; }
+.mision-inicio__icono { width: 17%; flex: none; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.mision-inicio__icono-calor { stroke: #ef8f19; }
+.mision-inicio__tarjeta > div { border-left: 1px solid #9bbec8; padding-left: 4cqw; }
+.mision-inicio__tarjeta h2 { margin: 0 0 1cqw; font-size: 3.9cqw; line-height: 1.2; letter-spacing: -.025em; }
+.mision-inicio__tarjeta p { margin: 0; font-size: 2.8cqw; line-height: 1.25; }
+.mision-inicio__explorar { position: absolute; left: 9.2%; top: 88.8%; width: 83.8%; height: 6.3%; min-height: 44px; padding: 0 4cqw; border: 0; border-radius: 1cqw; background: #dfeff7; color: #164863; font: 700 3.2cqw 'Century Gothic', Arial, sans-serif; display: flex; align-items: center; justify-content: center; gap: 10cqw; cursor: pointer; }
+.mision-inicio__explorar svg { width: 3.3cqw; height: 3.3cqw; fill: none; stroke: currentColor; stroke-width: 2; }
+.mision-inicio__error { position: absolute; left: 10%; top: 40%; background: #164863; font-size: 3cqw; }
+.mision-inicio .mision__pagina footer { top: 97%; font-size: 1.9cqw; }
+.mision-inicio__punto:active span { transform: scale(.94); }
+@media (hover: hover) { .mision-inicio__punto:hover span { transform: scale(1.1); } .mision-inicio__explorar:hover { background: white; } }
+@media (max-width: 420px) { .mision-inicio .mision__pagina { padding-bottom: 16px; } .mision-inicio .mision__pagina footer { top: auto; bottom: 0; } }

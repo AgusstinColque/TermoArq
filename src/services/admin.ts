@@ -4,7 +4,7 @@ import { type ConfiguracionAdmin, type FiltrosContactos, type PaginaContactos, t
 function errorAdmin(error: { message?: string; code?: string }): Error {
   if (error.code === 'PGRST202') return new Error('Falta instalar la migración del panel en Supabase. Consultá con quien administra el proyecto.')
   if (error.message?.includes('CONFIGURACION_CAMBIO')) return new Error('La configuración cambió desde otro dispositivo. Actualizá antes de guardar.')
-  if (error.message?.includes('JUEGO_NO_DISPONIBLE')) return new Error('Misión Termoarq todavía no está disponible. Elegí la ruleta.')
+  if (error.message?.includes('JUEGO_NO_DISPONIBLE')) return new Error('No se pudo activar este juego. Verificá que esté instalada la actualización de Misión Termoarq.')
   if (error.code === '42501') return new Error('Tu cuenta no tiene acceso al panel. Consultá con el administrador.')
   return new Error('No pudimos completar la consulta. Revisá la conexión y volvé a intentar.')
 }

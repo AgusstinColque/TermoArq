@@ -41,7 +41,7 @@ export function ConfiguracionAdmin() {
       <fieldset disabled={guardando}>
         <legend>Juego activo</legend><p>Elegí la experiencia que se abre después del registro. Solo un juego puede estar activo.</p>
         <label className="admin-radio"><input type="radio" name="juego" value="ruleta" checked={borrador.juego_activo === 'ruleta'} onChange={() => { setBorrador({ ...borrador, juego_activo: 'ruleta' }); setMensaje('') }} /><span><strong>Ruleta</strong><span>Giro de la ruleta con premios ilustrativos.</span></span></label>
-        <label className="admin-radio"><input type="radio" name="juego" value="mision" checked={borrador.juego_activo === 'mision'} onChange={() => { setBorrador({ ...borrador, juego_activo: 'mision' }); setMensaje('') }} /><span><strong>Misión Termoarq</strong><span>Exploración de la casa. Incluye el living; los otros ambientes están en preparación.</span></span></label>
+        <label className="admin-radio"><input type="radio" name="juego" value="mision" checked={borrador.juego_activo === 'mision'} onChange={() => { setBorrador({ ...borrador, juego_activo: 'mision' }); setMensaje('') }} /><span><strong>Misión Termoarq</strong><span>Exploración de la casa: una pregunta al azar en el living-comedor y otra en el dormitorio.</span></span></label>
         <label className="admin-radio"><input type="radio" name="juego" checked={borrador.juego_activo === null} onChange={() => { setBorrador({ ...borrador, juego_activo: null }); setMensaje('') }} /><span><strong>Juegos desactivados</strong><span>Pausa el inicio de nuevas experiencias. Quienes ya están jugando pueden terminar.</span></span></label>
       </fieldset>
       <fieldset disabled={guardando} className="admin-configuracion-registro"><legend>Registro de visitantes</legend><label className="admin-checkbox"><input type="checkbox" checked={borrador.registro_habilitado} onChange={evento => { setBorrador({ ...borrador, registro_habilitado: evento.target.checked }); setMensaje('') }} /><span>Permitir nuevos registros</span></label><p>Al pausarlo, no se guardan nuevas visitas ni se inicia su juego. Las participaciones ya registradas continúan.</p></fieldset>
@@ -51,3 +51,4 @@ export function ConfiguracionAdmin() {
     </form>}
   </section>
 }
+

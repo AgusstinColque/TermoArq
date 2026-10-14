@@ -15,13 +15,13 @@
 .mision__resuelta { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; opacity: 0; transition: opacity .45s ease-out; }
 .mision--fresca .mision__resuelta { opacity: 1; }
 .mision__calor { position: absolute; left: 43%; top: 33%; width: 17%; height: 14%; pointer-events: none; transition: opacity .2s; }
-.mision__calor path { fill: none; stroke: #ffdda3; stroke-width: 3; stroke-linecap: round; animation: heat-rise 2.7s ease-in-out infinite; }
+.mision__calor path { fill: none; stroke: #ffd080; stroke-width: 3; stroke-linecap: round; animation: heat-rise 2.7s ease-in-out infinite; }
 .mision__calor path:nth-child(2) { animation-delay: -.9s; }
 .mision__calor path:nth-child(3) { animation-delay: -1.8s; }
 @keyframes heat-rise { 0% { opacity: .25; transform: translateY(12px); } 50% { opacity: .95; } 100% { opacity: .15; transform: translateY(-10px); } }
 .mision--fresca .mision__calor { opacity: 0; }
 .mision__aire { position: absolute; left: 45%; top: 29%; width: 19%; height: 13%; pointer-events: none; opacity: 0; }
-.mision__aire path { fill: none; stroke: #bfeffc; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 26 90; animation: air-flow 1.8s linear infinite; }
+.mision__aire path { fill: none; stroke: #80ddff; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 26 90; animation: air-flow 1.8s linear infinite; }
 .mision__aire path:nth-child(2) { animation-delay: -.6s; }
 .mision__aire path:nth-child(3) { animation-delay: -1.2s; }
 .mision--fresca .mision__aire { opacity: .8; transition: opacity .45s .35s; }
@@ -61,7 +61,8 @@
 
 /* Ondas continuas de la referencia, debajo de los trazos animados. */
 .mision__ondas-fijas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; fill: none; stroke-width: 5; stroke-linecap: round; }
-.mision__ondas-fijas--calor { stroke: url(#mision-calor-fijo); opacity: 1; filter: drop-shadow(0 0 2px #ffd57a99); transition: opacity .2s; }
+.mision__ondas-fijas--calor { stroke: url(#mision-calor-fijo); opacity: 1; filter: drop-shadow(0 0 2px #ffe6adcc) drop-shadow(0 0 5px #ffac4280); transition: opacity .2s; }
 .mision--fresca .mision__ondas-fijas--calor { opacity: 0; }
-.mision__ondas-fijas--aire { stroke: url(#mision-aire-fijo); opacity: 0; filter: drop-shadow(0 0 2px #a6eaff99); }
+.mision__ondas-fijas--aire { stroke: url(#mision-aire-fijo); opacity: 0; filter: drop-shadow(0 0 2px #d4f8ffcc) drop-shadow(0 0 5px #55cfff80); }
 .mision--fresca .mision__ondas-fijas--aire { opacity: 1; transition: opacity .45s .35s; }
+.mision__display { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; fill: #22657a; font-family: monospace; font-weight: 600; filter: drop-shadow(0 0 1px #d8f8ff); }

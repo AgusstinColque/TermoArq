@@ -73,7 +73,7 @@ export function DatosCliente({ datos, onCambiar, onVolver, onContinuar, privacid
                   <p>Termoarq usará tu nombre, tu contacto y tus respuestas para estudiar los intereses y las necesidades de quienes visitan el stand y conocer qué servicios y proyectos interesan a los asistentes.</p>
 
                   <p>Podés solicitar el acceso, la corrección o la eliminación de tus datos.</p>
-                  <p><strong>Este aviso es un borrador.</strong> Antes de utilizarlo en el evento, Termoarq deberá completar la razón social y el domicilio del responsable, el contacto para ejercer tus derechos, los destinatarios de los datos, el plazo de conservación y las condiciones de entrega de la información.</p>
+                  <p><strong></strong> </p>
                 </div>
               </details>
             </div>
@@ -84,7 +84,7 @@ export function DatosCliente({ datos, onCambiar, onVolver, onContinuar, privacid
             </div>
             {errores.consentimiento && <p id="consentimiento-error" className="datos-cliente__error" role="alert">{errores.consentimiento}</p>}
 
-            {!privacidadAprobada && <p className="datos-cliente__ayuda">Borrador pendiente de revisión por Termoarq.</p>}
+            {!privacidadAprobada && <p className="datos-cliente__ayuda"></p>}
           </div>
         </div>
         <button type="submit" className="datos-cliente__continuar" disabled={(!privacidadAprobada && !vistaPrevia) || !onContinuar}>

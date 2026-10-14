@@ -46,7 +46,7 @@ function LoginAdmin({ errorSesion, onReintentar }: { errorSesion: string; onRein
         {errorSesion && <button type="button" className="admin-texto-boton" onClick={onReintentar}>Reintentar conexión</button>}
         <button className="admin-boton admin-boton--principal" type="submit" disabled={enviando} aria-busy={enviando}>{enviando ? 'Ingresando…' : 'Ingresar'}</button>
       </form>
-      <p className="admin-nota">El acceso requiere una cuenta habilitada por Termoarq.</p>
+      <p className="admin-nota"></p>
       <a href="/">Volver a la experiencia</a>
     </div>
   </main>

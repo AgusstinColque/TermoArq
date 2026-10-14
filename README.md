@@ -100,7 +100,7 @@ La entrada RPC es pública con validaciones y un límite global de 120 registros
 
 ## Ruleta de demostración
 
-Premios del mockup: gorra, taza, llavero, bolsa, libreta y lapicera. Probabilidades iguales únicamente para la demostración; no hay stock, entrega real ni registro del resultado. Finalizar vuelve a la bienvenida y limpia los datos en memoria. El símbolo central se obtiene recortando el viewport del SVG auténtico, sin redibujar la marca.
+Premios indicados por Ari: voucher de descuento, bolsa sorpresa, llavero, soporte para celular, gorra y mate. Probabilidades iguales únicamente para la demostración; no hay stock, entrega real ni registro del resultado. Finalizar vuelve a la bienvenida y limpia los datos en memoria. El símbolo central se obtiene recortando el viewport del SVG auténtico, sin redibujar la marca.
 
 Verificaciones: npm run test:db usa PostgreSQL embebido para ejecutar las tres migraciones y probar permisos anónimos, validación, guardado completo, rollback ante un fallo de inserción, reintentos, pausa y límite. Prueba de navegador con RPC simulada: fallo de guardado bloquea el juego, reintento conserva solicitud, éxito abre ruleta, el giro muestra un único resultado y Finalizar limpia el formulario. Diseño comprobado en vertical 1080 × 1920 y móvil 390 × 844, incluyendo movimiento reducido. Estas pruebas no confirman que la migración haya sido aplicada al proyecto remoto.
 
@@ -121,10 +121,10 @@ Verificado en Chrome: las seis posiciones ganadoras quedan bajo el puntero, orie
 Vista frontal con carcasa biselada, cavidad oscura, espesor bajo las aspas y tapa central elevada. Materiales SVG con iluminación azul y reflejos moderados; se mantienen geometría y posiciones del prototipo. Las líneas de aire se retiraron. El rotor acelera y frena en 4,8 segundos; solo las aspas reciben un desenfoque máximo de 0,7 px durante la velocidad alta. Íconos y nombres permanecen derechos y nítidos. Movimiento reducido conserva el giro de 3,2 segundos sin desenfoque. Verificadas las seis posiciones ganadoras, orientación, modal y reinicio en Chrome; queda comprobar el rendimiento en el hardware LG.
 
 ### Aire frontal en Canvas
-`AireTurbina.tsx` agrega estelas blancas y azul hielo con expansión, curvatura y suavidad creciente. La intensidad sigue el tiempo de la animación real del rotor y desaparece durante el frenado. Usa dos texturas pequeñas precalculadas, hasta 18 estelas (14 en pantallas pequeñas, 6 con movimiento reducido) y una densidad máxima de 1,5. No intercepta toques ni altera posiciones o probabilidades. Detiene el dibujo cuando la página o el escenario no están visibles y libera observadores y requestAnimationFrame al terminar o desmontarse.
-Verificado en Chrome: transparencia inicial y final, estelas visibles durante el giro, límite de resolución, ausencia de animación pendiente al terminar, reinicio y cero desbordes/errores. La fluidez final debe comprobarse en la LG física.
 
-El aire se reforzó tras la revisión visual: estelas más largas y anchas, mayor contraste y expansión fuera de la carcasa. Usa hasta 30 estelas (24 en pantallas pequeñas, 12 con movimiento reducido), manteniendo el reloj del giro y la limpieza al finalizar. El contenedor recorta el desborde horizontal de las ráfagas.
+AireTurbina.tsx dibuja partículas muy finas en seis corrientes que nacen cerca de las paletas, acompañan el giro y se dispersan hacia el exterior. Una iluminación tenue sobre el borde sugiere la presión del aire; no se dibujan estelas largas ni nubes opacas. La intensidad sigue la aceleración y el frenado. El modo de movimiento reducido usa menos partículas y menor opacidad. La capa no intercepta toques, se pausa fuera de pantalla y se limpia al terminar.
+
+Verificado en Chrome en formato vertical; falta comprobar la fluidez y el contraste en la LG física.
 
 ## Organización del código
 

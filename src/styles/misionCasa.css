@@ -1,0 +1,54 @@
+.casa-desafio__contenido { max-width: 834px; margin: auto; padding: clamp(20px, 4vw, 44px); }
+.casa-desafio__cabecera { display: flex; align-items: center; gap: 20px; }
+.casa-desafio__cabecera img { width: clamp(180px, 34vw, 300px); height: auto; }
+.casa-desafio__cabecera button { width: 48px; flex: none; padding: 10px; border: 0; background: transparent; color: white; cursor: pointer; }
+.casa-desafio__cabecera svg { fill: none; stroke: currentColor; stroke-width: 2; }
+.casa-desafio h1 { position: static; margin: 32px 0 12px; font-size: clamp(30px, 5vw, 52px); }
+.casa-desafio__progreso { color: #dfeff7; margin: 0; font-size: 18px; }
+.casa-desafio__escena { position: relative; margin: 24px -12px; }
+.casa-desafio__decision h2 { margin: 0 0 20px; font-size: clamp(24px, 3.4vw, 34px); line-height: 1.25; }
+.casa-desafio__decision p { color: #dfeff7; line-height: 1.5; font-size: clamp(18px, 2.4vw, 22px); }
+.casa-desafio__opciones { display: grid; gap: 14px; margin-top: 24px; }
+.casa-desafio__opciones button { display: flex; align-items: center; gap: 16px; min-height: 72px; padding: 20px; border: 0; border-radius: 12px; background: #f5f4f0; color: #164863; text-align: left; line-height: 1.4; font-size: clamp(18px, 2.4vw, 23px); cursor: pointer; }
+.casa-desafio__opciones button span { flex: none; font-weight: 700; }
+.casa-desafio__respuesta { padding-top: 8px; }
+.casa-desafio__respuesta h3 { font-size: 28px; margin: 12px 0; }
+.casa-desafio__respuesta button { margin-top: 20px; width: 100%; padding: 20px; border: 0; border-radius: 12px; background: #dfeff7; color: #164863; font-weight: 700; font-size: 20px; cursor: pointer; }
+.casa-desafio footer { position: static; width: auto; margin: 32px 0 0; font-size: 14px; line-height: 1.4; text-align: center; color: #dfeff7; }
+@media (hover: hover) { .casa-desafio__opciones button:hover, .casa-desafio__respuesta button:hover { background: #dfeff7; } }
+.mision-inicio__punto:disabled { opacity: .7; cursor: default; }
+
+
+/* Living: composición y coordenadas exactas de la versión original 1049 × 1500.
+   Solo el bloque de preguntas crece para alojar los textos aprobados del PDF. */
+.casa-desafio--living .casa-desafio__contenido { position: relative; padding: 0; display: flow-root; overflow: hidden; background: transparent; }
+.casa-desafio--living .casa-desafio__cabecera { position: absolute; top: 3%; left: 4%; right: 6%; z-index: 2; gap: 3%; }
+.casa-desafio--living .casa-desafio__cabecera img { width: 40%; }
+.casa-desafio--living .casa-desafio__cabecera button { width: 6%; min-width: 36px; min-height: 36px; padding: 0; }
+.casa-desafio--living h1 { position: absolute; z-index: 2; left: 6%; top: 105px; top: 14cqw; margin: 0; font-size: 6.4cqw; }
+.casa-desafio--living .casa-desafio__contenido { container-type: inline-size; }
+.casa-desafio--living .casa-desafio__cabecera { top: 4cqw; }
+.casa-desafio--living .casa-desafio__progreso { position: absolute; z-index: 2; left: 6%; top: 23cqw; font-size: clamp(14px, 2.6cqw, 22px); }
+.casa-desafio--living .casa-desafio__escena { position: absolute; inset: 0 0 auto; margin: 0; pointer-events: none; }
+.escena-living-original { position: relative; width: 100%; aspect-ratio: 1049 / 1500; }
+.casa-desafio--living .casa-desafio__decision { position: relative; z-index: 1; margin-top: 96%; padding: 0 6% 4%; }
+.casa-desafio--living .casa-desafio__decision h2 { font-size: clamp(24px, 5cqw, 42px); }
+.casa-desafio--living footer { position: relative; margin: 0; padding: 16px 6% 24px; }
+.mision .escena-living-original .mision__calor path { animation: heat-rise 2.7s ease-in-out infinite !important; }
+.mision .escena-living-original .mision__calor path:nth-child(2) { animation-delay: -.9s !important; }
+.mision .escena-living-original .mision__calor path:nth-child(3) { animation-delay: -1.8s !important; }
+.mision .escena-living-original .mision__aire path { stroke-dasharray: 26 90; animation: air-flow 1.8s linear infinite !important; }
+.mision .escena-living-original .mision__aire path:nth-child(2) { animation-delay: -.6s !important; }
+.mision .escena-living-original .mision__aire path:nth-child(3) { animation-delay: -1.2s !important; }
+
+
+/* Fundir los bordes del fondo del render con el lienzo, sin mover la casa.
+   La transición inferior comienza después del piso de la vivienda. */
+.escena-living-original .mision__casa,
+.escena-living-original .mision__resuelta {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 2%, #000 98%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 65%, transparent 76%);
+  mask-image: linear-gradient(to right, transparent, #000 2%, #000 98%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 65%, transparent 76%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+.casa-desafio--living .casa-desafio__cabecera button { min-height: 44px; min-width: 44px; }

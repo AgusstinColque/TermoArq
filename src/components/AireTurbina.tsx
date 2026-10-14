@@ -4,28 +4,36 @@ interface AireTurbinaProps {
   movimiento: Animation | null
 }
 
-/** Una textura suave, reutilizada: no aplicamos desenfoques a todo el canvas por cuadro. */
-function crearEstela(suave: boolean) {
-  const textura = document.createElement('canvas')
-  textura.width = 192
-  textura.height = 64
-  const contexto = textura.getContext('2d')
-  if (!contexto) return textura
-  const luz = contexto.createLinearGradient(12, 0, 180, 0)
-  luz.addColorStop(0, 'rgba(223,239,247,0)')
-  luz.addColorStop(.3, 'rgba(186,219,234,.65)')
-  luz.addColorStop(.65, 'rgba(239,249,255,1)')
-  luz.addColorStop(1, 'rgba(223,239,247,0)')
-  contexto.strokeStyle = luz
-  contexto.lineCap = 'round'
-  contexto.lineWidth = suave ? 12 : 4.5
-  contexto.shadowColor = 'rgba(205,231,244,.6)'
-  contexto.shadowBlur = suave ? 10 : 4
-  contexto.beginPath()
-  contexto.moveTo(12, 36)
-  contexto.bezierCurveTo(62, 14, 118, 20, 180, 34)
-  contexto.stroke()
-  return textura
+interface Particula {
+  sector: number
+  desvio: number
+  fase: number
+  avance: number
+  tamano: number
+  brillo: number
+}
+
+function suavizar(desde: number, hasta: number, valor: number) {
+  const t = Math.max(0, Math.min(1, (valor - desde) / (hasta - desde)))
+  return t * t * (3 - 2 * t)
+}
+
+function crearParticulas(cantidad: number): Particula[] {
+  let semilla = 2166136261
+  const azar = () => {
+    semilla ^= semilla << 13
+    semilla ^= semilla >>> 17
+    semilla ^= semilla << 5
+    return (semilla >>> 0) / 4294967296
+  }
+  return Array.from({ length: cantidad }, (_, indice) => ({
+    sector: indice % 6,
+    desvio: azar() * 2 - 1,
+    fase: azar(),
+    avance: 1.05 + azar() * .55,
+    tamano: .45 + azar() * .8,
+    brillo: .36 + azar() * .34,
+  }))
 }
 
 export function AireTurbina({ movimiento }: AireTurbinaProps) {
@@ -36,22 +44,14 @@ export function AireTurbina({ movimiento }: AireTurbinaProps) {
     if (!lienzo || !movimiento) return
     const contexto = lienzo.getContext('2d')
     if (!contexto) return
-    const texturas = [crearEstela(false), crearEstela(true)]
-    const preferencia = matchMedia('(prefers-reduced-motion: reduce)')
-    // Distribución estable e independiente del generador del sorteo.
-    const particulas = Array.from({ length: 30 }, (_, indice) => ({
-      angulo: indice * 2.399963,
-      fase: (indice * .618034) % 1,
-      velocidad: .78 + (indice % 5) * .09,
-      profundidad: (indice % 3) / 2,
-    }))
+
+    const reducido = matchMedia('(prefers-reduced-motion: reduce)').matches
+    const particulas = crearParticulas(reducido ? 180 : 660)
     let ancho = 0
     let alto = 0
     let escala = 1
     let densidad = 1
     let cuadro = 0
-    let ultimoTiempo = 0
-    let avance = 0
     let visible = true
     let terminado = false
 
@@ -68,50 +68,54 @@ export function AireTurbina({ movimiento }: AireTurbinaProps) {
       lienzo.height = Math.max(1, Math.round(alto * densidad))
       escala = (lienzo.parentElement?.parentElement?.getBoundingClientRect().width || ancho) / 700
     }
-    const suavizar = (desde: number, hasta: number, valor: number) => {
-      const t = Math.max(0, Math.min(1, (valor - desde) / (hasta - desde)))
-      return t * t * (3 - 2 * t)
-    }
-    const dibujar = (ahora: number) => {
+    const dibujar = () => {
       cuadro = 0
       limpiar()
       const duracion = Number(movimiento.effect?.getComputedTiming().duration) || 4800
-      const tiempo = Number(movimiento.currentTime) || 0
-      const progreso = tiempo / duracion
+      const progreso = (Number(movimiento.currentTime) || 0) / duracion
       if (progreso >= 1 || movimiento.playState === 'idle') {
         terminado = true
         return
       }
-      const intervalo = ultimoTiempo ? Math.min((ahora - ultimoTiempo) / 1000, .05) : 0
-      ultimoTiempo = ahora
-      const intensidad = suavizar(0, .1, progreso) * (1 - suavizar(.65, .98, progreso))
-      const reducido = preferencia.matches
-      avance += intervalo * (.15 + intensidad * (reducido ? .4 : .85))
+
+      const intensidad = suavizar(0, .18, progreso) * (1 - suavizar(.65, .99, progreso))
       contexto.setTransform(densidad * escala, 0, 0, densidad * escala, ancho * densidad / 2, alto * densidad / 2)
-      const cantidad = reducido ? 12 : ancho < 450 ? 24 : 30
-      for (let indice = 0; indice < cantidad; indice++) {
-        const particula = particulas[indice]!
-        const vida = (particula.fase + avance * particula.velocidad) % 1
-        const radio = 100 + 290 * Math.pow(vida, 1.15)
-        const angulo = particula.angulo + vida * .5 + avance * .12
-        const opacidad = Math.pow(Math.sin(Math.PI * vida), .8) * intensidad * (reducido ? .7 : .9)
-        const longitud = (85 + 155 * vida) * (reducido ? .85 : 1)
-        const grosor = 30 + 34 * vida + 18 * particula.profundidad
-        contexto.save()
-        contexto.translate(Math.cos(angulo) * radio, Math.sin(angulo) * radio)
-        contexto.rotate(angulo + .12)
-        contexto.globalAlpha = opacidad
-        contexto.drawImage(texturas[indice % 3 === 0 ? 1 : 0]!, -longitud / 2, -grosor / 2, longitud, grosor)
-        contexto.restore()
+      contexto.globalCompositeOperation = 'screen'
+
+      // La presión ilumina apenas el borde; el desplazamiento visible lo dan
+      // partículas diminutas que avanzan en espiral y se dispersan hacia fuera.
+      const presion = contexto.createRadialGradient(0, 0, 314, 0, 0, 388)
+      presion.addColorStop(0, 'rgba(160, 212, 234, 0)')
+      presion.addColorStop(.2, `rgba(160, 212, 234, ${.055 * intensidad})`)
+      presion.addColorStop(.52, `rgba(160, 212, 234, ${.035 * intensidad})`)
+      presion.addColorStop(1, 'rgba(160, 212, 234, 0)')
+      contexto.fillStyle = presion
+      contexto.beginPath()
+      contexto.arc(0, 0, 388, 0, Math.PI * 2)
+      contexto.fill()
+
+      for (const particula of particulas) {
+        const edad = (particula.fase + progreso * particula.avance) % 1
+        const radio = 276 + 124 * suavizar(0, 1, edad)
+        const angulo = particula.sector * Math.PI / 3 + progreso * Math.PI * 3.2 - edad * .9 + particula.desvio * (.07 + edad * .08)
+        const aparicion = suavizar(0, .2, edad) * (1 - suavizar(.68, 1, edad))
+        const opacidad = particula.brillo * aparicion * intensidad * (reducido ? .5 : 1)
+        if (opacidad < .015) continue
+        contexto.fillStyle = `rgba(188, 225, 241, ${opacidad})`
+        contexto.beginPath()
+        contexto.arc(Math.cos(angulo) * radio, Math.sin(angulo) * radio, particula.tamano, 0, Math.PI * 2)
+        contexto.fill()
       }
+
+      contexto.globalCompositeOperation = 'source-over'
       cuadro = requestAnimationFrame(dibujar)
     }
     const actualizarVisibilidad = () => {
       cancelAnimationFrame(cuadro)
       cuadro = 0
-      ultimoTiempo = 0
       if (!document.hidden && visible && !terminado) cuadro = requestAnimationFrame(dibujar)
     }
+
     medir()
     const medidas = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(medir) : null
     medidas?.observe(lienzo)
@@ -135,4 +139,3 @@ export function AireTurbina({ movimiento }: AireTurbinaProps) {
 
   return <div className="ruleta__viento" aria-hidden="true"><canvas ref={lienzoRef} /></div>
 }
-

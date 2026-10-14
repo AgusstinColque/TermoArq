@@ -11,100 +11,68 @@ export const disenoRuleta = {
   "premios": [
     {
       "posicion": "translate(350.000,136.000)",
-      "nombre": "Gorra",
+      "nombre": "Voucher de descuento",
+      "lineas": ["Voucher de", "descuento"],
+      "titular": "¡Ganaste un voucher de descuento!",
+      "retiro": "Consultá las condiciones con el equipo de Termoarq.",
       "formas": [
-        {
-          "tipo": "path",
-          "atributos": {
-            "d": "M-26 9V-2a26 24 0 0 1 52 0V9M-26 9Q0 2 26 9L36 18Q7 25-26 17Z M0-26V5"
-          }
-        }
+        { "tipo": "path", "atributos": { "d": "M-27-23H27V-11Q18-9 18 0Q18 9 27 11V23H-27V11Q-18 9-18 0Q-18-9-27-11Z M-11-23V23" } },
+        { "tipo": "circle", "atributos": { "cx": "0", "cy": "-8", "r": "3" } },
+        { "tipo": "circle", "atributos": { "cx": "12", "cy": "8", "r": "3" } },
+        { "tipo": "path", "atributos": { "d": "M-3 11L15-11" } }
       ]
     },
     {
       "posicion": "translate(535.329,243.000)",
-      "nombre": "Taza",
+      "nombre": "Bolsa sorpresa",
+      "lineas": ["Bolsa", "sorpresa"],
+      "titular": "¡Ganaste una bolsa sorpresa!",
+      "retiro": "Retirala con el equipo de Termoarq.",
       "formas": [
-        {
-          "tipo": "path",
-          "atributos": {
-            "d": "M-22-23H19V18Q0 31-22 18Z M19-17H29Q43-2 29 12H19 M-22-23Q0-16 19-23"
-          }
-        }
+        { "tipo": "path", "atributos": { "d": "M-25-11H25L29 28H-29Z M-13-11V-19a13 13 0 0 1 26 0V-11 M0-1V17 M-7 7H7" } }
       ]
     },
     {
       "posicion": "translate(535.329,457.000)",
       "nombre": "Llavero",
+      "lineas": ["Llavero"],
+      "titular": "¡Ganaste un llavero!",
+      "retiro": "Retiralo con el equipo de Termoarq.",
       "formas": [
-        {
-          "tipo": "circle",
-          "atributos": {
-            "cx": "0",
-            "cy": "-18",
-            "r": "13"
-          }
-        },
-        {
-          "tipo": "circle",
-          "atributos": {
-            "cx": "0",
-            "cy": "16",
-            "r": "21"
-          }
-        },
-        {
-          "tipo": "path",
-          "atributos": {
-            "d": "M-4-5V-1M-8 16H8M0 8V24"
-          }
-        }
+        { "tipo": "circle", "atributos": { "cx": "0", "cy": "-18", "r": "13" } },
+        { "tipo": "circle", "atributos": { "cx": "0", "cy": "16", "r": "21" } },
+        { "tipo": "path", "atributos": { "d": "M-4-5V-1M-8 16H8M0 8V24" } }
       ]
     },
     {
       "posicion": "translate(350.000,564.000)",
-      "nombre": "Bolsa",
+      "nombre": "Soporte para celular",
+      "lineas": ["Soporte", "para celular"],
+      "titular": "¡Ganaste un soporte para celular!",
+      "retiro": "Retiralo con el equipo de Termoarq.",
       "formas": [
-        {
-          "tipo": "path",
-          "atributos": {
-            "d": "M-25-11H25L29 28H-29Z M-13-11V-19a13 13 0 0 1 26 0V-11"
-          }
-        }
+        { "tipo": "rect", "atributos": { "x": "-13", "y": "-30", "width": "26", "height": "40", "rx": "3" } },
+        { "tipo": "path", "atributos": { "d": "M-4 4H4 M0 10V23 M-22 23H22 M-25 23L-29 28H29L25 23" } }
       ]
     },
     {
       "posicion": "translate(164.671,457.000)",
-      "nombre": "Libreta",
+      "nombre": "Gorra",
+      "lineas": ["Gorra"],
+      "titular": "¡Ganaste una gorra!",
+      "retiro": "Retirala con el equipo de Termoarq.",
       "formas": [
-        {
-          "tipo": "rect",
-          "atributos": {
-            "x": "-22",
-            "y": "-29",
-            "width": "45",
-            "height": "58",
-            "rx": "3"
-          }
-        },
-        {
-          "tipo": "path",
-          "atributos": {
-            "d": "M-12-29V29 M-28-20H-17 M-28-8H-17 M-28 4H-17 M-28 16H-17 M0-10H13 M0 0H13"
-          }
-        }
+        { "tipo": "path", "atributos": { "d": "M-26 9V-2a26 24 0 0 1 52 0V9M-26 9Q0 2 26 9L36 18Q7 25-26 17Z M0-26V5" } }
       ]
     },
     {
       "posicion": "translate(164.671,243.000)",
-      "nombre": "Lapicera",
+      "nombre": "Mate",
+      "lineas": ["Mate"],
+      "titular": "¡Ganaste un mate!",
+      "retiro": "Retiralo con el equipo de Termoarq.",
       "formas": [
-        {
-          "tipo": "path",
-          "atributos": {
-            "d": "M-6-29H6V20L0 31-6 20Z M-6-20H6 M6-25H12V-7 M-6 20H6"
-          }
-        }
+        { "tipo": "path", "atributos": { "d": "M-22-12H22Q21 15 10 27H-10Q-21 15-22-12Z M-23-12Q0-18 23-12 M9-14L19-31 M19-31H29 M-9 27H9" } }
       ]
     }
   ]

@@ -6,7 +6,7 @@
 .ruleta h1:focus { outline: none; }
 .ruleta__intro { margin: 0; color: #bad3de; font-size: 21px; line-height: 1.5; }
 .ruleta__escenario { width: 100%; margin: 24px auto 16px; position: relative; isolation: isolate; }
-.ruleta__turbina { display: block; width: 100%; overflow: visible; }
+.ruleta__turbina { position: relative; z-index: 1; display: block; width: 100%; overflow: visible; }
 .ruleta__rotor { transform-origin: 350px 350px; }
 .ruleta__premio { transform-origin: 0 0; }
 .ruleta__aspa { transition: fill 180ms ease-out; }
@@ -64,7 +64,5 @@
 @media (prefers-reduced-motion: reduce) { .ruleta__aspas { animation: none !important; } }
 
 /* Aire frontal: capa transparente acotada al escenario, sin interceptar los toques. */
-.ruleta__viento { position: absolute; inset: -12%; pointer-events: none; overflow: hidden; contain: paint; }
+.ruleta__viento { position: absolute; z-index: 2; inset: -18%; pointer-events: none; overflow: hidden; contain: paint; }
 .ruleta__viento canvas { display: block; width: 100%; height: 100%; }
-
-

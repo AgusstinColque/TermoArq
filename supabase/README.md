@@ -76,6 +76,6 @@ La entrada RPC es pública con validaciones y un límite global de 120 registros
 
 ## Ruleta de demostración
 
-Premios del mockup: gorra, taza, llavero, bolsa, libreta y lapicera. Probabilidades iguales únicamente para la demostración; no hay stock, entrega real ni registro del resultado. Finalizar vuelve a la bienvenida y limpia los datos en memoria. El símbolo central se obtiene recortando el viewport del SVG auténtico, sin redibujar la marca.
+Premios indicados por Ari: voucher de descuento, bolsa sorpresa, llavero, soporte para celular, gorra y mate. Probabilidades iguales únicamente para la demostración; no hay stock, entrega real ni registro del resultado. Finalizar vuelve a la bienvenida y limpia los datos en memoria. El símbolo central se obtiene recortando el viewport del SVG auténtico, sin redibujar la marca.
 
 Verificaciones: npm run test:db usa PostgreSQL embebido para ejecutar las tres migraciones y probar permisos anónimos, validación, guardado completo, rollback ante un fallo de inserción, reintentos, pausa y límite. Prueba de navegador con RPC simulada: fallo de guardado bloquea el juego, reintento conserva solicitud, éxito abre ruleta, el giro muestra un único resultado y Finalizar limpia el formulario. Diseño comprobado en vertical 1080 × 1920 y móvil 390 × 844, incluyendo movimiento reducido. Estas pruebas no confirman que la migración haya sido aplicada al proyecto remoto.

@@ -4,8 +4,6 @@ import { disenoRuleta, simboloRuleta } from '../data/ruletaDiseno'
 import '../styles/ruleta.css'
 import { AireTurbina } from './AireTurbina'
 
-const titulares = ['¡Esta gorra es tuya!', '¡Esta taza es tuya!', '¡Este llavero es tuyo!', '¡Esta bolsa es tuya!', '¡Esta libreta es tuya!', '¡Esta lapicera es tuya!']
-const retiros = ['Retirala', 'Retirala', 'Retiralo', 'Retirala', 'Retirala', 'Retirala']
 type Fase = 'lista' | 'activando' | 'girando' | 'resultado'
 
 function IconoPremio({ indice }: { indice: number }) {
@@ -162,7 +160,7 @@ export function Ruleta({ onFinalizar }: { onFinalizar: () => void }) {
             {disenoRuleta.premios.map((item, indice) => <g key={item.nombre} transform={item.posicion}>
               <g ref={elemento => { etiquetasRef.current[indice] = elemento }} className="ruleta__premio" style={{ transform: `rotate(${-angulo}deg)` }} color={premio === indice ? '#123E52' : '#FFFFFF'}>
                 <IconoPremio indice={indice} />
-                <text y="61" fill="currentColor" textAnchor="middle" fontSize="22" fontWeight="600">{item.nombre}</text>
+                <text fill="currentColor" textAnchor="middle" fontSize="20" fontWeight="600">{item.lineas.map((linea, lineaIndice) => <tspan key={linea} x="0" y={item.lineas.length === 1 ? 61 : 55 + lineaIndice * 23}>{linea}</tspan>)}</text>
               </g>
             </g>)}
           </g>
@@ -187,7 +185,7 @@ export function Ruleta({ onFinalizar }: { onFinalizar: () => void }) {
         <button className="ruleta__girar" type="button" onClick={() => { void girar() }} disabled={fase !== 'lista'} aria-busy={enMovimiento}>
           <span>{textoBoton}</span><svg aria-hidden="true" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 14H24M16 6L24 14 16 22" /></svg>
         </button>
-        <p className="ruleta__nota">Prototipo · Premios de ejemplo</p>
+        <p className="ruleta__nota"></p>
         <p className="ruleta__estado" role="status">{enMovimiento ? 'La turbina está girando.' : premio !== null ? `Resultado de ejemplo: ${disenoRuleta.premios[premio]!.nombre}.` : ''}</p>
       </div>
     </div>
@@ -197,10 +195,10 @@ export function Ruleta({ onFinalizar }: { onFinalizar: () => void }) {
         <div className="ruleta__resultado-arte" aria-hidden="true">
           <svg viewBox="-60 -60 120 120" color="#123E52"><IconoPremio indice={premio} /><g transform="translate(28,28) scale(.27)"><SimboloMarca /></g></svg>
         </div>
-        <h2 id="premio-titulo">{titulares[premio]}</h2>
-        <p id="premio-retiro">{retiros[premio]} con el equipo de Termoarq.</p>
+        <h2 id="premio-titulo">{disenoRuleta.premios[premio]!.titular}</h2>
+        <p id="premio-retiro">{disenoRuleta.premios[premio]!.retiro}</p>
         <button className="ruleta__finalizar" type="button" onClick={onFinalizar} autoFocus>Finalizar</button>
-        <p id="premio-nota" className="ruleta__resultado-nota">Premio ilustrativo · Prototipo</p>
+        <p id="premio-nota" className="ruleta__resultado-nota"></p>
       </>}
     </dialog>
   </main>

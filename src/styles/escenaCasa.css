@@ -1,0 +1,32 @@
+.casa-clima { position: relative; width: 100%; aspect-ratio: 3 / 2; }
+.casa-clima__camara > img { display: block; width: 100%; height: auto; }
+.casa-clima__efectos { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; fill: none; stroke-linecap: round; }
+/* Dos capas como en la referencia original: trazos continuos con brillo + ondas móviles. */
+.casa-clima__calor { opacity: 0; transition: opacity .2s; }
+.casa-clima__calor--visible { opacity: 1; }
+.casa-clima__calor-fijo { stroke-width: 5; filter: drop-shadow(0 0 2px #ffe6adcc) drop-shadow(0 0 5px #ffac4280); }
+.casa-clima__calor-movil { overflow: visible; stroke: #ffd080; stroke-width: 3; }
+.casa-clima__frio { opacity: 0; transition: opacity .45s .35s; }
+.casa-clima__ambiente--activo .casa-clima__frio { opacity: 1; }
+.casa-clima__aire-fijo { stroke-width: 5; filter: drop-shadow(0 0 2px #d4f8ffcc) drop-shadow(0 0 5px #55cfff80); }
+.casa-clima__aire-movil { overflow: visible; stroke: #80ddff; stroke-width: 3; opacity: .8; }
+.casa-clima__corriente { stroke-dasharray: 26 90; }
+/* Se conserva el control explícito de movimiento para evitar que el efecto quede
+   desactivado por la regla global de la misión. El resto de la interfaz no cambia. */
+.mision .casa-clima--animada .casa-clima__calor-movil path { animation: casa-calor-original 2.7s ease-in-out infinite !important; }
+.mision .casa-clima--animada .casa-clima__calor-movil path:nth-child(2) { animation-delay: -.9s !important; }
+.mision .casa-clima--animada .casa-clima__calor-movil path:nth-child(3) { animation-delay: -1.8s !important; }
+.mision .casa-clima--animada .casa-clima__corriente { animation: casa-aire-original 1.8s linear infinite !important; }
+.mision .casa-clima--animada .casa-clima__corriente:nth-child(2) { animation-delay: -.6s !important; }
+.mision .casa-clima--animada .casa-clima__corriente:nth-child(3) { animation-delay: -1.2s !important; }
+@keyframes casa-calor-original { 0% { opacity: .25; transform: translateY(12px); } 50% { opacity: .95; } 100% { opacity: .15; transform: translateY(-10px); } }
+@keyframes casa-aire-original { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -116; } }
+.mision .casa-clima--pausada .casa-clima__calor-movil path,
+.mision .casa-clima--pausada .casa-clima__corriente { animation: none !important; }
+.casa-clima--pausada .casa-clima__calor-movil path { opacity: .5; }
+.casa-clima--pausada .casa-clima__corriente { stroke-dasharray: none; }
+.casa-clima__control { position: absolute; right: 0; bottom: 0; z-index: 2; min-height: 44px; padding: 8px 12px; border: 1px solid #9bbec8; border-radius: 8px; color: #dfeff7; background: #164863; font-size: 14px; cursor: pointer; pointer-events: auto; }
+
+
+/* Render y efectos comparten el mismo plano, sin recortar el ambiente. */
+.casa-clima__camara { position: relative; width: 100%; aspect-ratio: 3 / 2; }

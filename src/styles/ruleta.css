@@ -54,14 +54,8 @@
 @media (prefers-reduced-motion: reduce) { .ruleta__marca { transition: none; } }
 
 /* Relieve frontal: carcasa fija, rotor y premios en capas independientes. */
-.ruleta__escenario--girando .ruleta__aspas { animation: turbina-velocidad 4800ms linear both; }
 .ruleta__rotor { will-change: auto; }
 .ruleta__escenario--girando .ruleta__rotor { will-change: transform; }
-@keyframes turbina-velocidad {
-  0%, 8%, 75%, 100% { filter: blur(0); }
-  25%, 42% { filter: blur(.7px); }
-}
-@media (prefers-reduced-motion: reduce) { .ruleta__aspas { animation: none !important; } }
 
 /* Aire frontal: capa transparente acotada al escenario, sin interceptar los toques. */
 .ruleta__viento { position: absolute; z-index: 2; inset: -18%; pointer-events: none; overflow: hidden; contain: paint; }

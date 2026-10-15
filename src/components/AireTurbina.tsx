@@ -46,7 +46,11 @@ export function AireTurbina({ movimiento }: AireTurbinaProps) {
     if (!contexto) return
 
     const reducido = matchMedia('(prefers-reduced-motion: reduce)').matches
-    const particulas = crearParticulas(reducido ? 180 : 660)
+    const particulas = crearParticulas(reducido ? 180 : 480)
+    let cantidadVisible = particulas.length
+    let ultimoCuadro = 0
+    let cuadrosLentos = 0
+    let cuadrosMedidos = 0
     let ancho = 0
     let alto = 0
     let escala = 1
@@ -63,13 +67,22 @@ export function AireTurbina({ movimiento }: AireTurbinaProps) {
       const rectangulo = lienzo.getBoundingClientRect()
       ancho = rectangulo.width
       alto = rectangulo.height
-      densidad = Math.min(window.devicePixelRatio || 1, 1.5)
+      // El SVG de la ruleta conserva su nitidez; el lienzo de partículas no
+      // necesita multiplicar píxeles en pantallas táctiles de alta densidad.
+      densidad = 1
       lienzo.width = Math.max(1, Math.round(ancho * densidad))
       lienzo.height = Math.max(1, Math.round(alto * densidad))
       escala = (lienzo.parentElement?.parentElement?.getBoundingClientRect().width || ancho) / 700
     }
-    const dibujar = () => {
+    const dibujar = (tiempo: number) => {
       cuadro = 0
+      if (ultimoCuadro && tiempo - ultimoCuadro > 24) cuadrosLentos++
+      ultimoCuadro = tiempo
+      if (++cuadrosMedidos === 16) {
+        if (cuadrosLentos >= 5) cantidadVisible = Math.max(180, Math.floor(cantidadVisible * .7))
+        cuadrosMedidos = 0
+        cuadrosLentos = 0
+      }
       limpiar()
       const duracion = Number(movimiento.effect?.getComputedTiming().duration) || 4800
       const progreso = (Number(movimiento.currentTime) || 0) / duracion
@@ -94,7 +107,8 @@ export function AireTurbina({ movimiento }: AireTurbinaProps) {
       contexto.arc(0, 0, 388, 0, Math.PI * 2)
       contexto.fill()
 
-      for (const particula of particulas) {
+      for (let indice = 0; indice < cantidadVisible; indice++) {
+        const particula = particulas[indice]!
         const edad = (particula.fase + progreso * particula.avance) % 1
         const radio = 276 + 124 * suavizar(0, 1, edad)
         const angulo = particula.sector * Math.PI / 3 + progreso * Math.PI * 3.2 - edad * .9 + particula.desvio * (.07 + edad * .08)
@@ -113,6 +127,7 @@ export function AireTurbina({ movimiento }: AireTurbinaProps) {
     const actualizarVisibilidad = () => {
       cancelAnimationFrame(cuadro)
       cuadro = 0
+      ultimoCuadro = 0
       if (!document.hidden && visible && !terminado) cuadro = requestAnimationFrame(dibujar)
     }
 

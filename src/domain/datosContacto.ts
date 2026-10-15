@@ -1,7 +1,8 @@
 export interface DatosContacto {
   nombre: string
   apellido: string
-  contacto: string
+  correo: string
+  telefono: string
   consentimiento: boolean
 }
 export type Campo = keyof DatosContacto
@@ -12,14 +13,16 @@ export function validarDatos(datos: DatosContacto): Errores {
   else if (datos.nombre.trim().length > 100) errores.nombre = 'Usá hasta 100 caracteres.'
   if (!datos.apellido.trim()) errores.apellido = 'Ingresá tu apellido.'
   else if (datos.apellido.trim().length > 100) errores.apellido = 'Usá hasta 100 caracteres.'
-  const contacto = datos.contacto.trim()
-  if (!contacto) errores.contacto = 'Ingresá un teléfono o un email.'
-  else if (contacto.includes('@')) {
-    if (contacto.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contacto)) {
-      errores.contacto = 'Revisá el email, por ejemplo nombre@empresa.com.'
+  const correo = datos.correo.trim()
+  const telefono = datos.telefono.trim()
+  if (!correo && !telefono) errores.correo = 'Ingresá un correo o un teléfono para continuar.'
+  else {
+    if (correo && (correo.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo))) {
+      errores.correo = 'Revisá el correo, por ejemplo nombre@empresa.com.'
     }
-  } else if (!/^\+?[\d\s().-]+$/.test(contacto) || contacto.replace(/\D/g, '').length < 7 || contacto.replace(/\D/g, '').length > 15) {
-    errores.contacto = 'Ingresá un teléfono con código de área o un email válido.'
+    if (telefono && (!/^\+?[\d\s().-]+$/.test(telefono) || telefono.replace(/\D/g, '').length < 7 || telefono.replace(/\D/g, '').length > 15)) {
+      errores.telefono = 'Ingresá un teléfono válido con código de área.'
+    }
   }
   if (!datos.consentimiento) errores.consentimiento = 'Aceptá los términos y condiciones para continuar.'
   return errores

@@ -16,8 +16,8 @@ export async function generarExcelContactos(visitas: VisitaAdmin[], filtros: Fil
     views: [{ state: 'frozen', ySplit: 6, showGridLines: false }],
     pageSetup: { paperSize: 9, orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0, printTitlesRow: '6:6' },
   })
-  const titulos = ['Fecha y hora (Argentina)', 'Nombre', 'Apellido', 'Email', 'Teléfono', 'Servicio', 'Proyecto', 'Etapa', 'Juego', 'ID de visita']
-  const anchos = [25, 24, 26, 36, 24, 32, 36, 36, 20, 38]
+  const titulos = ['Fecha y hora (Argentina)', 'Nombre', 'Apellido', 'Teléfono', 'Correo', 'Servicio', 'Proyecto', 'Etapa', 'Juego', 'ID de visita']
+  const anchos = [25, 24, 26, 24, 36, 32, 36, 36, 20, 38]
   hoja.columns = anchos.map(width => ({ width }))
   const principal = 'FF164863', tenue = 'FFEDF4F7', texto = 'FF243944'
   for (const [numero, valor] of [
@@ -38,7 +38,7 @@ export async function generarExcelContactos(visitas: VisitaAdmin[], filtros: Fil
   hoja.addTable({ name: 'VisitasTermoarq', ref: 'A6', headerRow: true, totalsRow: false,
     style: { theme: 'TableStyleMedium2', showRowStripes: true },
     columns: titulos.map(name => ({ name, filterButton: true })),
-    rows: visitas.map(visita => [fechaArgentina(visita.iniciada_en), visita.nombre, visita.apellido, visita.correo ?? '', visita.telefono ?? '', visita.respuestas.servicio?.respuesta ?? '', visita.respuestas.proyecto?.respuesta ?? '', visita.respuestas.etapa?.respuesta ?? '', visita.juego === 'ruleta' ? 'Ruleta' : 'Misión TermoArq', visita.id]),
+    rows: visitas.map(visita => [fechaArgentina(visita.iniciada_en), visita.nombre, visita.apellido, visita.telefono ?? '', visita.correo ?? '', visita.respuestas.servicio?.respuesta ?? '', visita.respuestas.proyecto?.respuesta ?? '', visita.respuestas.etapa?.respuesta ?? '', visita.juego === 'ruleta' ? 'Ruleta' : 'Misión TermoArq', visita.id]),
   })
   hoja.getRow(6).height = 34
   hoja.getRow(6).eachCell(celda => {

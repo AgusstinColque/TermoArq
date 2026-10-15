@@ -13,11 +13,12 @@ import { type PreguntaDesbloqueo } from './data/desafioInicial'
 import { useDesplazamiento } from './hooks/useDesplazamiento'
 
 const vistaPreviaRuleta = import.meta.env.DEV && new URLSearchParams(window.location.search).get('pantalla') === 'ruleta'
+const vistaPreviaDatos = import.meta.env.DEV && new URLSearchParams(window.location.search).get('pantalla') === 'datos'
 
 export default function App() {
-  const [pantalla, setPantalla] = useState<'bienvenida' | 'datos' | 'preguntas' | 'desafio' | 'ruleta' | 'mision'>(vistaPreviaRuleta ? 'ruleta' : 'bienvenida')
+  const [pantalla, setPantalla] = useState<'bienvenida' | 'datos' | 'preguntas' | 'desafio' | 'ruleta' | 'mision'>(vistaPreviaRuleta ? 'ruleta' : vistaPreviaDatos ? 'datos' : 'bienvenida')
   const [cicloRuleta, setCicloRuleta] = useState(0)
-  const [datos, setDatos] = useState<DatosContacto>({ nombre: '', apellido: '', contacto: '', consentimiento: false })
+  const [datos, setDatos] = useState<DatosContacto>({ nombre: '', apellido: '', correo: '', telefono: '', consentimiento: false })
   const [respuestas, setRespuestas] = useState<RespuestasProyecto>({ servicio: '', proyecto: '', etapa: '' })
   const [respuestaDesafio, setRespuestaDesafio] = useState('')
   const [preguntaDesafio, setPreguntaDesafio] = useState<PreguntaDesbloqueo | null>(null)
@@ -76,7 +77,7 @@ export default function App() {
     finally { bloqueoRef.current = false; setGuardando(false) }
   }
   const finalizar = () => {
-    setDatos({ nombre: '', apellido: '', contacto: '', consentimiento: false })
+    setDatos({ nombre: '', apellido: '', correo: '', telefono: '', consentimiento: false })
     setRespuestas({ servicio: '', proyecto: '', etapa: '' })
     setRespuestaDesafio('')
     setPreguntaDesafio(null)

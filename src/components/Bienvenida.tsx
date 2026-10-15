@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { CambioJuegoRapido } from './CambioJuegoRapido'
 import '../styles/bienvenidaAdmin.css'
 
 interface BienvenidaProps {
@@ -68,12 +69,12 @@ export function Bienvenida({ onComenzar, cargando = false, error = '' }: Bienven
           width="300"
           height="53"
         />
-        <a className="bienvenida__admin" href="/admin" aria-label="Ingresar al panel de administración" title="Acceso del equipo">
+        <div className="bienvenida__accesos"><CambioJuegoRapido /><a className="bienvenida__admin" href="/admin" aria-label="Ingresar al panel de administración" title="Acceso del equipo">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <rect x="5" y="10" width="14" height="11" rx="2" />
             <path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2" />
           </svg>
-        </a>
+        </a></div>
       </header>
 
       <div className="bienvenida__multimedia">

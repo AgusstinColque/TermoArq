@@ -19,9 +19,15 @@ export function DatosCliente({ datos, onCambiar, onVolver, onContinuar, privacid
   const cambiar = (campo: Campo, valor: string | boolean) => {
     const nuevos = { ...datos, [campo]: valor }
     onCambiar(nuevos)
-    if (errores[campo]) setErrores(actuales => ({ ...actuales, [campo]: validarDatos(nuevos)[campo] }))
+    if (errores[campo] || ((campo === 'correo' || campo === 'telefono') && errores.correo)) {
+      const siguientes = validarDatos(nuevos)
+      setErrores(actuales => ({ ...actuales, [campo]: siguientes[campo], correo: siguientes.correo }))
+    }
   }
-  const revisar = (campo: Campo) => setErrores(actuales => ({ ...actuales, [campo]: validarDatos(datos)[campo] }))
+  const revisar = (campo: Campo) => {
+    const siguientes = validarDatos(datos)
+    setErrores(actuales => ({ ...actuales, [campo]: siguientes[campo] }))
+  }
   const continuar = (evento: FormEvent<HTMLFormElement>) => {
     evento.preventDefault()
     const nuevosErrores = validarDatos(datos)
@@ -33,7 +39,7 @@ export function DatosCliente({ datos, onCambiar, onVolver, onContinuar, privacid
       return
     }
     if ((!privacidadAprobada && !vistaPrevia) || !onContinuar) return
-    onContinuar({ ...datos, nombre: datos.nombre.trim(), apellido: datos.apellido.trim(), contacto: datos.contacto.trim() })
+    onContinuar({ ...datos, nombre: datos.nombre.trim(), apellido: datos.apellido.trim(), correo: datos.correo.trim(), telefono: datos.telefono.trim() })
   }
 
   return (
@@ -51,15 +57,16 @@ export function DatosCliente({ datos, onCambiar, onVolver, onContinuar, privacid
       <p className="datos-cliente__intro">Antes de jugar, contanos un poco de vos.</p>
       <form ref={formularioRef} className="datos-cliente__formulario" noValidate onSubmit={continuar}>
         <div className="datos-cliente__campos">
-          {(['nombre', 'apellido', 'contacto'] as const).map(campo => (
+          {(['nombre', 'apellido', 'correo', 'telefono'] as const).map(campo => (
             <div className="datos-cliente__campo" key={campo}>
-              <label htmlFor={campo}>{campo === 'nombre' ? 'Nombre' : campo === 'apellido' ? 'Apellido' : 'Teléfono o email'}</label>
-              <input id={campo} name={campo} type="text" value={datos[campo]} required maxLength={campo === 'contacto' ? 254 : 100}
-                placeholder={campo === 'nombre' ? 'Tu nombre' : campo === 'apellido' ? 'Tu apellido' : 'Ingresá tu teléfono o email'}
-                autoComplete="off" autoCapitalize={campo === 'contacto' ? 'none' : 'words'} spellCheck={false}
-                aria-invalid={Boolean(errores[campo])} aria-describedby={[campo === 'contacto' ? 'contacto-ayuda' : '', errores[campo] ? `${campo}-error` : ''].filter(Boolean).join(' ') || undefined}
+              <label htmlFor={campo}>{campo === 'nombre' ? 'Nombre' : campo === 'apellido' ? 'Apellido' : campo === 'correo' ? 'Correo electrónico' : 'Teléfono'}</label>
+              <input id={campo} name={campo} type={campo === 'correo' ? 'email' : campo === 'telefono' ? 'tel' : 'text'} value={datos[campo]}
+                maxLength={campo === 'correo' ? 254 : campo === 'telefono' ? 32 : 100}
+                placeholder={campo === 'nombre' ? 'Tu nombre' : campo === 'apellido' ? 'Tu apellido' : campo === 'correo' ? 'nombre@empresa.com' : 'Tu número con código de área'}
+                autoComplete={campo === 'correo' ? 'email' : campo === 'telefono' ? 'tel' : 'off'} autoCapitalize={campo === 'correo' ? 'none' : 'words'} spellCheck={false}
+                aria-invalid={Boolean(errores[campo])} aria-describedby={[campo === 'correo' || campo === 'telefono' ? 'contacto-ayuda' : '', errores[campo] ? `${campo}-error` : ''].filter(Boolean).join(' ') || undefined}
                 onChange={evento => cambiar(campo, evento.target.value)} onBlur={() => revisar(campo)} />
-              {campo === 'contacto' && <p id="contacto-ayuda" className="datos-cliente__ayuda">Con uno de los dos alcanza.</p>}
+              {campo === 'telefono' && <p id="contacto-ayuda" className="datos-cliente__ayuda">Completá al menos uno de los dos.</p>}
               {errores[campo] && <p id={`${campo}-error`} className="datos-cliente__error" role="alert">{errores[campo]}</p>}
             </div>
           ))}
@@ -70,7 +77,7 @@ export function DatosCliente({ datos, onCambiar, onVolver, onContinuar, privacid
               <details>
                 <summary>Ver términos y condiciones</summary>
                 <div className="datos-cliente__detalle-privacidad">
-                  <p>Termoarq usará tu nombre, tu contacto y tus respuestas para estudiar los intereses y las necesidades de quienes visitan el stand y conocer qué servicios y proyectos interesan a los asistentes.</p>
+                  <p>Termoarq usará tu nombre, el correo o teléfono que compartas y tus respuestas para estudiar los intereses y las necesidades de quienes visitan el stand y conocer qué servicios y proyectos interesan a los asistentes.</p>
 
                   <p>Podés solicitar el acceso, la corrección o la eliminación de tus datos.</p>
                   <p><strong></strong> </p>

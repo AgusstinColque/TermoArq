@@ -72,11 +72,14 @@
 .admin-lista-cabecera p { margin: 0; }
 .admin-lista-cabecera span { color: var(--admin-secundario); font-size: .8125rem; }
 .admin-tabla-scroll { overflow-x: auto; border: 1px solid var(--admin-borde); border-radius: 8px; background: white; scrollbar-color: #9bbec8 white; }
-.admin-tabla { width: 100%; min-width: 800px; border-collapse: collapse; font-size: .875rem; text-align: left; }
+.admin-tabla { width: 100%; min-width: 1180px; border-collapse: collapse; font-size: .875rem; text-align: left; }
 .admin-tabla th { color: var(--admin-secundario); background: #eef3f5; font-weight: 600; padding: 14px 18px; white-space: nowrap; }
 .admin-tabla td { padding: 18px; border-top: 1px solid #e1e9ed; vertical-align: top; max-width: 290px; overflow-wrap: anywhere; }
 .admin-tabla td strong { display: block; color: var(--admin-tinta); margin-bottom: 4px; }
 .admin-tabla td span { display: block; }
+.admin-tabla td.admin-tabla__nombre { font-weight: 600; color: var(--admin-tinta); }
+.admin-tabla .admin-tabla__telefono { min-width: 150px; white-space: nowrap; }
+.admin-tabla .admin-tabla__correo { min-width: 250px; max-width: none; white-space: nowrap; }
 .admin-tabla td time { white-space: nowrap; }
 .admin-contactos-movil { display: none; }
 .admin-paginacion { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 0; font-size: .875rem; }
@@ -137,7 +140,9 @@
   .admin-contactos-movil li + li { border-top: 1px solid var(--admin-borde); }
   .admin-contactos-movil h2 { margin-bottom: 4px; }
   .admin-contactos-movil time { font-size: .8125rem; color: var(--admin-secundario); }
-  .admin-contacto-dato { font-size: .9375rem; margin: 0 0 8px !important; }
+  .admin-contacto-dato { display: grid; gap: 8px; font-size: .9375rem; margin: 8px 0 12px; }
+  .admin-contacto-dato dt { font-size: .75rem; color: var(--admin-secundario); }
+  .admin-contacto-dato dd { margin: 2px 0 0; overflow-wrap: anywhere; }
   .admin-contactos-movil summary { min-height: 44px; padding: 12px 0 0; color: var(--admin-tinta); cursor: pointer; font-size: .9375rem; }
   .admin-respuestas { margin: 16px 0 0; }
   .admin-respuestas > div + div { margin-top: 12px; }

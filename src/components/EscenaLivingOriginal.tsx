@@ -2,9 +2,9 @@
 export function EscenaLivingOriginal({ fresco, onError }: { fresco: boolean; onError: () => void }) {
   return <div className={'escena-living-original' + (fresco ? ' mision--fresca' : '')} role="img" aria-label={fresco ? 'Living climatizado a 24 °C con aire fresco saliendo del equipo; los otros ambientes permanecen oscuros' : 'Living con ondas de calor ascendentes; los otros ambientes permanecen oscuros'}>
         <div className="mision__camara">
-          <img className="mision__casa" src="/media/mision-escena-original.png" alt="" draggable={false} onError={onError} />
+          <img className="mision__casa" src="/media/mision-escena-original.webp" alt="" draggable={false} onError={onError} />
 
-          <img className="mision__resuelta" src="/media/mision-escena-resuelta.png" alt="" onError={onError} />
+          <img className="mision__resuelta" src="/media/mision-escena-resuelta.webp" alt="" onError={onError} />
           <svg className="mision__ondas-fijas mision__ondas-fijas--calor" viewBox="0 0 1049 1500" aria-hidden="true">
             <defs><linearGradient id="mision-calor-fijo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ffe5a3"/><stop offset="1" stopColor="#ffb044" stopOpacity=".9"/></linearGradient></defs>
             <path d="M510 620C535 588 487 567 515 530"/>

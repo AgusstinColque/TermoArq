@@ -31,7 +31,7 @@ export function EscenaCasa({ activos, calientes, onError, destacarDormitorio = f
   const [fallo, setFallo] = useState(false)
   return <div className={'casa-clima ' + (destacarDormitorio ? 'casa-clima--dormitorio ' : '') + 'casa-clima--animada'}>
     <div className="casa-clima__camara">
-    <img src={destacarDormitorio ? "/media/mision-dormitorio-detalle.png" : "/media/mision-casa-equipos.png"} width="1536" height="1024"
+    <img src={destacarDormitorio ? "/media/mision-dormitorio-detalle.webp" : "/media/mision-casa-equipos.webp"} width="1536" height="1024"
       alt={(destacarDormitorio ? 'Vista completa del dormitorio con cama, ventana y aire acondicionado. ' : 'Casa con aire acondicionado en living-comedor y dormitorio. ') + (activos.length ? 'Climatización activa en: ' + activos.map(a => a === 'living' ? 'living-comedor' : a).join(' y ') + '.' : 'Equipos apagados.')}
       draggable={false} onError={() => { setFallo(true); onError() }}/>
     {!fallo && <svg className="casa-clima__efectos" viewBox="0 0 1536 1024" aria-hidden="true">

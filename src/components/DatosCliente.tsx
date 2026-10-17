@@ -52,7 +52,7 @@ export function DatosCliente({ datos, onCambiar, onVolver, onContinuar, privacid
           <span>Paso 1 de 3</span><span className="datos-cliente__paso datos-cliente__paso--activo" /><span className="datos-cliente__paso" /><span className="datos-cliente__paso" />
         </div>
       </div>
-      <img className="datos-cliente__logo" src="/brand/termoarq-logo-blanco.svg" alt="Termoarq, constructora termomecánica" width="300" height="53" />
+      <img className="datos-cliente__logo" src="/brand/termoarq-logo-aprobado-blanco.svg" alt="Termoarq, constructora termomecánica" width="300" height="53" />
       <h1 id="datos-titulo" ref={tituloRef} tabIndex={-1}>Completá tus datos</h1>
       <p className="datos-cliente__intro">Antes de jugar, contanos un poco de vos.</p>
       <form ref={formularioRef} className="datos-cliente__formulario" noValidate onSubmit={continuar}>

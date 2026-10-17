@@ -1,28 +1,65 @@
-// Códigos y textos del catálogo habilitado por la migración de registro público.
+// Catálogo confirmado por el equipo de TermoArq.
 export const preguntasProyecto = [
   {
-    id: 'servicio', etiqueta: '¿Qué servicio te interesa?', opciones: [
-      { valor: 'climatizacion', texto: 'Climatización (frío y calefacción)' },
-      { valor: 'ventilacion', texto: 'Ventilación mecánica' },
-      { valor: 'consultoria', texto: 'Consultoría técnica' },
-      { valor: 'orientacion', texto: 'Necesito asesoramiento' },
-    ],
+    "id": "servicio",
+    "etiqueta": "¿Qué servicio te interesa?",
+    "opciones": [
+      {
+        "valor": "climatizacion",
+        "texto": "Climatización"
+      },
+      {
+        "valor": "calefaccion",
+        "texto": "Calefacción"
+      },
+      {
+        "valor": "ventilacion",
+        "texto": "Ventilación"
+      },
+      {
+        "valor": "presurizacion_escalera",
+        "texto": "Presurización de escalera"
+      }
+    ]
   },
   {
-    id: 'proyecto', etiqueta: '¿Para qué tipo de proyecto?', opciones: [
-      { valor: 'vivienda', texto: 'Vivienda' },
-      { valor: 'oficinas', texto: 'Oficinas o local comercial' },
-      { valor: 'edificio', texto: 'Edificio o desarrollo inmobiliario' },
-      { valor: 'industria', texto: 'Planta industrial' },
-      { valor: 'laboratorio', texto: 'Laboratorio' },
-    ],
+    "id": "proyecto",
+    "etiqueta": "¿Para qué tipo de proyecto?",
+    "opciones": [
+      {
+        "valor": "vivienda",
+        "texto": "Vivienda"
+      },
+      {
+        "valor": "comercio",
+        "texto": "Comercio"
+      },
+      {
+        "valor": "industria",
+        "texto": "Industria"
+      },
+      {
+        "valor": "hospitalaria_laboratorio",
+        "texto": "Hospitalaria / Laboratorio"
+      }
+    ]
   },
   {
-    id: 'etapa', etiqueta: '¿En qué etapa estás?', opciones: [
-      { valor: 'planificando', texto: 'Estoy planificando' },
-      { valor: 'disenando', texto: 'Estoy desarrollando el proyecto' },
-      { valor: 'presupuestando', texto: 'Estoy buscando presupuestos' },
-      { valor: 'ejecutando', texto: 'La obra está en ejecución' },
-    ],
-  },
+    "id": "etapa",
+    "etiqueta": "¿En qué etapa estás?",
+    "opciones": [
+      {
+        "valor": "proyecto",
+        "texto": "Proyecto"
+      },
+      {
+        "valor": "primera_etapa",
+        "texto": "Primera etapa de construcción"
+      },
+      {
+        "valor": "finalizacion_obra",
+        "texto": "Finalización de obra"
+      }
+    ]
+  }
 ] as const

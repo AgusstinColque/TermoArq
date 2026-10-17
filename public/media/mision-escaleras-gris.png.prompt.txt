@@ -1,0 +1,1 @@
+ImageGen. Fuente: mision-escaleras.png. Edición solicitada: cambiar únicamente las paredes azules y el dintel azul a gris cemento medio ligeramente cálido, conservar geometría, encuadre 1200x1344, escalones blancos, puertas, barandas, panel verde y transparencia. Archivo generado: exec-c3ae86cb-9909-41fc-9fe0-5acf4895be16.png.

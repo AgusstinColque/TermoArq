@@ -7,7 +7,7 @@ export function MisionInicio({ onExplorar, completados, onFinalizar }: { onExplo
   const titulo = useRef<HTMLHeadingElement>(null)
   useEffect(() => { titulo.current?.focus({ preventScroll: true }); window.scrollTo(0, 0) }, [])
   const terminado = completados.length === 2
-  const proximo = completados.includes('living') ? 'dormitorio' : 'living'
+  const proximo = (['living', 'dormitorio'] as const).find(id => !completados.includes(id)) ?? 'living'
   const [errorImagen, setErrorImagen] = useState(false)
   return <main className="mision mision-inicio">
     <div className="mision__pagina">

@@ -1,5 +1,5 @@
 import ExcelJS from 'exceljs'
-import { preguntasProyecto } from '../data/preguntasProyecto.ts'
+import { preguntasProyectoAdmin as preguntasProyecto } from '../data/preguntasProyectoAdmin.ts'
 import { fechaVisita, type FiltrosContactos, type VisitaAdmin } from '../domain/admin.ts'
 
 /** Excel guarda fechas sin zona horaria: representamos la hora civil de Argentina. */

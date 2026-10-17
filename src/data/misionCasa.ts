@@ -1,7 +1,7 @@
-export type AmbienteCasa = 'living' | 'dormitorio'
+export type AmbienteCasa = 'living' | 'dormitorio' | 'escaleras'
 export type OpcionCasa = 'a' | 'b' | 'c'
 export interface PreguntaCasa { id: number; ambiente: AmbienteCasa; pregunta: string; opciones: { id: OpcionCasa; texto: string }[]; correcta: OpcionCasa; explicacion: string }
-// Fuente: Mision_Termoarq_12_Preguntas_Completo.pdf, preguntas 1–6.
+// Fuente: Mision_Termoarq_12_Preguntas_Completo.pdf, preguntas 1–6 y 10–12.
 export const preguntasCasa: PreguntaCasa[] = [
   {
     "id": 1,
@@ -129,4 +129,68 @@ export const preguntasCasa: PreguntaCasa[] = [
     "correcta": "b",
     "explicacion": "Los sistemas multisplit y VRF permiten climatizar varios ambientes con una única unidad exterior, optimizando el espacio y favoreciendo el ahorro energético."
   }
+,
+{
+  "id": 10,
+  "ambiente": "escaleras",
+  "pregunta": "¿Cuál es la función principal de un sistema de presurización de escaleras en un edificio?",
+  "opciones": [
+    {
+      "id": "a",
+      "texto": "Enfriar las escaleras durante un incendio"
+    },
+    {
+      "id": "b",
+      "texto": "Evitar o limitar el ingreso de humo a las escaleras, permitiendo una evacuación más segura"
+    },
+    {
+      "id": "c",
+      "texto": "Extraer el aire caliente de todos los pisos"
+    }
+  ],
+  "correcta": "b",
+  "explicacion": "La presurización ayuda a mantener las vías de evacuación protegidas del ingreso de humo."
+},
+{
+  "id": 11,
+  "ambiente": "escaleras",
+  "pregunta": "¿Cómo funciona un sistema de presurización de escaleras?",
+  "opciones": [
+    {
+      "id": "a",
+      "texto": "Inyecta aire exterior para generar una diferencia de presión positiva respecto de los sectores adyacentes"
+    },
+    {
+      "id": "b",
+      "texto": "Extrae todo el aire de la escalera para generar vacío"
+    },
+    {
+      "id": "c",
+      "texto": "Hace circular el mismo aire sin generar diferencias de presión"
+    }
+  ],
+  "correcta": "a",
+  "explicacion": "El sistema suministra aire para mantener una presión positiva controlada respecto de los espacios adyacentes."
+},
+{
+  "id": 12,
+  "ambiente": "escaleras",
+  "pregunta": "¿Qué debemos considerar para seleccionar correctamente un ventilador de presurización?",
+  "opciones": [
+    {
+      "id": "a",
+      "texto": "Solamente la potencia del motor"
+    },
+    {
+      "id": "b",
+      "texto": "Elegir el ventilador de mayor tamaño disponible"
+    },
+    {
+      "id": "c",
+      "texto": "Realizar un cálculo según la normativa aplicable, considerando caudal, presión diferencial, fugas de aire y condiciones de puertas abiertas y cerradas"
+    }
+  ],
+  "correcta": "c",
+  "explicacion": "La selección debe basarse en un cálculo conforme a la normativa aplicable, verificando presiones, caudal y condiciones de operación."
+}
 ]

@@ -34,3 +34,15 @@ La preview comienza con la casa completa y tres signos +. Sigue el mockup entreg
 Corrección de la previa: casa reconstruida desde el mockup con paredes completas y aberturas altas. La imagen conserva su proporción natural 3:2 mediante aspect-ratio y object-fit: contain; se elimina el achatamiento vertical anterior. Marcadores reajustados a los ambientes. Asset reemplazado con procedencia de ambos pasos de generación en su archivo de prompt.
 
 Corrección de cámara de la previa: ángulo más bajo y frontal según el nuevo mockup de tablet; mayor presencia de fachadas y menor superficie de pisos. Se mantiene la proporción natural 3:2 y la interfaz existente. Asset y prompt actualizados.
+
+## Presurización de escaleras
+Tercer ambiente: una pregunta sorteada entre las 10–12 del PDF. Se conserva el criterio educativo existente: cualquier respuesta revela la solución y activa la demostración. Escena aprobada aislada en /media/mision-presurizacion.html, sin controles de demo: React controla activación y pausa mediante mensajes verificados por origen y ventana. Humo autónomo, puerta abierta, retroceso hacia el ambiente vecino, ventilador de impulsión y trazos de aire limpio. Carteles debajo de la imagen. No modifica Supabase ni la demo original de extracción.
+
+## Experiencias separadas
+Después del desbloqueo y el guardado, al entrar a Misión se asigna una experiencia mediante crypto.getRandomValues, 50 % casa y 50 % presurización. La selección se mantiene durante la participación. Casa completa solo living y dormitorio; presurización solo una pregunta del banco 10–12. La finalización regresa al inicio del flujo público. En desarrollo, ?pantalla=mision&experiencia=casa o experiencia=presurizacion permite revisar cada recorrido sin alterar el sorteo público.
+
+## Desbloqueo por juego
+Ruleta requiere dos preguntas distintas del mazo de Supabase; Misión conserva una. La segunda asignación tiene UUID derivado estable para reintentos, sin sorteos en el navegador. Se muestran explicación y Siguiente pregunta antes de Jugar. Si el registro confirma ruleta tras un cambio concurrente de juego, se completa la segunda antes de entrar. No requiere migraciones adicionales.
+
+## Premio al completar Misión
+Casa y presurización terminan en PremioMision antes de reiniciar la participación. Reutiliza las seis opciones, íconos, titulares, textos de retiro y sortearPremio de la ruleta (probabilidad uniforme). Un único sorteo por cierre; Finalizar entrega el control al flujo público o reinicia la vista de desarrollo. Se mantiene el carácter local de prueba de los premios, sin stock, persistencia o validación de entrega adicionales. La ruleta permanece intacta.

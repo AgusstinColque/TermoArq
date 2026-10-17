@@ -2,6 +2,8 @@ import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { type PreguntaDesbloqueo } from '../data/desafioInicial'
 
 interface DesafioProps {
+  numeroPregunta?: number
+  totalPreguntas?: number
   pregunta: PreguntaDesbloqueo | null
   cargandoPregunta: boolean
   errorPregunta: string
@@ -14,11 +16,12 @@ interface DesafioProps {
   errorGuardado?: string
 }
 
-export function Desafio({ pregunta, cargandoPregunta, errorPregunta, onReintentar, respuesta, onCambiar, onVolver, onJugar, guardando = false, errorGuardado = '' }: DesafioProps) {
+export function Desafio({ numeroPregunta = 1, totalPreguntas = 1, pregunta, cargandoPregunta, errorPregunta, onReintentar, respuesta, onCambiar, onVolver, onJugar, guardando = false, errorGuardado = '' }: DesafioProps) {
   const [mostrarRespuesta, setMostrarRespuesta] = useState(false)
   const [error, setError] = useState(false)
   const tituloRef = useRef<HTMLHeadingElement>(null)
   const primeraOpcionRef = useRef<HTMLInputElement>(null)
+  const ultimaPregunta = numeroPregunta >= totalPreguntas
   const esCorrecta = respuesta === pregunta?.correcta
 
   useEffect(() => {
@@ -72,18 +75,18 @@ export function Desafio({ pregunta, cargandoPregunta, errorPregunta, onReintenta
             <h3>Respuesta correcta</h3>
             <p>{pregunta.opciones.find(opcion => opcion.id === pregunta.correcta)?.texto}</p>
           </div>
-          <p className="desafio__invitacion">Ahora sí, ¡a jugar!</p>
+          <p className="desafio__invitacion">{ultimaPregunta ? 'Ahora sí, ¡a jugar!' : 'Vamos con la segunda pregunta.'}</p>
           <div className="desafio__accion">
             {errorGuardado && <p className="datos-cliente__error" role="alert">{errorGuardado}</p>}
             <button type="button" className="datos-cliente__continuar" onClick={onJugar} disabled={!onJugar || guardando} aria-busy={guardando}>
-              <span>{guardando ? 'Guardando…' : errorGuardado ? 'Reintentar' : 'Jugar'}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6" /></svg>
+              <span>{guardando ? 'Guardando…' : errorGuardado ? 'Reintentar' : ultimaPregunta ? 'Jugar' : 'Siguiente pregunta'}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6" /></svg>
             </button>
           </div>
         </>
       ) : (
         <>
           <h1 id="desafio-titulo" ref={tituloRef} tabIndex={-1}>Antes de jugar,<br />un desafío.</h1>
-          <p className="datos-cliente__intro">Una pregunta para conocer más sobre Termoarq.</p>
+          <p className="datos-cliente__intro">{totalPreguntas === 2 ? 'Pregunta ' + numeroPregunta + ' de 2 · Conocé más sobre Termoarq.' : 'Una pregunta para conocer más sobre Termoarq.'}</p>
           <form className="datos-cliente__formulario" noValidate onSubmit={responder}>
             <fieldset className="desafio__opciones" aria-describedby={error ? 'desafio-error' : 'desafio-ayuda'}>
               <legend>{pregunta.pregunta}</legend>

@@ -19,7 +19,7 @@ try {
   await assert.rejects(configurar('ruleta', false), /PERSONAL_REQUERIDO/)
   assert.equal((await db.query('select * from contactos')).rows.length, 0)
   const datos = { nombre: 'Ana', apellido: 'Prueba', contacto: 'ana@example.com', consentimiento: true }
-  const respuestas = { servicio: 'climatizacion', proyecto: 'vivienda', etapa: 'planificando' }
+  const respuestas = { servicio: 'climatizacion', proyecto: 'vivienda', etapa: 'proyecto' }
   await db.exec('reset role')
   for (const [indice, contacto] of [datos, { ...datos, nombre: 'Bruno', contacto: '+54 387 123-4567' }].entries()) await db.query('select registrar_visita($1,$2,$3)', [`10000000-0000-4000-8000-00000000000${indice + 1}`, JSON.stringify(contacto), JSON.stringify(respuestas)])
   await db.exec("update participaciones set iniciada_en = case solicitud_id when '10000000-0000-4000-8000-000000000001' then '2026-10-11T02:30:00Z'::timestamptz else '2026-10-11T03:30:00Z'::timestamptz end; set role authenticated; select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000011', false);")
@@ -32,7 +32,7 @@ try {
   assert.equal((await consulta({ busqueda: 'ana@example' })).rows[0].resultado.total, 1)
   assert.equal((await consulta({ busqueda: '%' })).rows[0].resultado.total, 0)
   assert.equal((await consulta({ desde: '2026-10-11', hasta: '2026-10-11' })).rows[0].resultado.total, 1)
-  assert.equal((await consulta({ servicio: 'climatizacion', proyecto: 'vivienda', etapa: 'planificando' })).rows[0].resultado.total, 2)
+  assert.equal((await consulta({ servicio: 'climatizacion', proyecto: 'vivienda', etapa: 'proyecto' })).rows[0].resultado.total, 2)
   assert.equal((await consulta({ servicio: 'ventilacion' })).rows[0].resultado.total, 0)
   await assert.rejects(consulta({ pagina: 0 }), /FILTROS_INVALIDOS/)
   await assert.rejects(consulta({ tamano: 201 }), /FILTROS_INVALIDOS/)

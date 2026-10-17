@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { preguntasProyecto } from '../../data/preguntasProyecto'
+import { preguntasProyectoAdmin as preguntasProyecto } from '../../data/preguntasProyectoAdmin'
 import { fechaVisita, filtrosIniciales, validarFiltros, type FiltrosContactos, type PaginaContactos, type VisitaAdmin } from '../../domain/admin'
 import { exportarContactos, listarContactos } from '../../services/admin'
 

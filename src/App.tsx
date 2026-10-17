@@ -8,7 +8,7 @@ import { MisionTermoarq } from './components/MisionTermoarq'
 import { type DatosContacto } from './domain/datosContacto'
 import { type RespuestasProyecto } from './domain/preguntasProyecto'
 import { guardarRegistro, nuevaSolicitud, comprobarDisponibilidad } from './services/registro'
-import { asignarPreguntaDesbloqueo } from './services/desafio'
+import { asignarDesafiosDesbloqueo } from './services/desafio'
 import { type PreguntaDesbloqueo } from './data/desafioInicial'
 import { useDesplazamiento } from './hooks/useDesplazamiento'
 
@@ -21,7 +21,9 @@ export default function App() {
   const [datos, setDatos] = useState<DatosContacto>({ nombre: '', apellido: '', correo: '', telefono: '', consentimiento: false })
   const [respuestas, setRespuestas] = useState<RespuestasProyecto>({ servicio: '', proyecto: '', etapa: '' })
   const [respuestaDesafio, setRespuestaDesafio] = useState('')
-  const [preguntaDesafio, setPreguntaDesafio] = useState<PreguntaDesbloqueo | null>(null)
+  const [preguntasDesafio, setPreguntasDesafio] = useState<PreguntaDesbloqueo[]>([])
+  const [indiceDesafio, setIndiceDesafio] = useState(0)
+  const preguntaDesafio = preguntasDesafio[indiceDesafio] ?? null
   const [cargandoDesafio, setCargandoDesafio] = useState(false)
   const [errorDesafio, setErrorDesafio] = useState('')
   const [guardando, setGuardando] = useState(false)
@@ -34,8 +36,8 @@ export default function App() {
     setCargandoDesafio(true)
     setErrorDesafio('')
     try {
-      const pregunta = await asignarPreguntaDesbloqueo(solicitud)
-      if (solicitudRef.current === solicitud) setPreguntaDesafio(pregunta)
+      const preguntas = await asignarDesafiosDesbloqueo(solicitud)
+      if (solicitudRef.current === solicitud) setPreguntasDesafio(preguntas)
     } catch (error) {
       if (solicitudRef.current === solicitud) {
         setErrorDesafio(error instanceof Error ? error.message : 'No pudimos cargar tu pregunta. Volvé a intentar.')
@@ -59,7 +61,21 @@ export default function App() {
     setErrorGuardado('')
     try {
       if (!solicitudRef.current || !preguntaDesafio) throw new Error('No pudimos confirmar tu pregunta. Volvé a intentar.')
+      if (indiceDesafio + 1 < preguntasDesafio.length) {
+        setIndiceDesafio(indice => indice + 1)
+        setRespuestaDesafio('')
+        return
+      }
       const juego = await guardarRegistro(solicitudRef.current, datos, respuestas)
+      // La configuración puede cambiar mientras la persona responde. La ruleta
+      // confirmada por el registro nunca se abre sin el segundo desafío.
+      if (juego === 'ruleta' && preguntasDesafio.length < 2) {
+        const preguntas = await asignarDesafiosDesbloqueo(solicitudRef.current, 'ruleta')
+        setPreguntasDesafio(preguntas)
+        setIndiceDesafio(1)
+        setRespuestaDesafio('')
+        return
+      }
       setPantalla(juego)
     } catch (error) {
       setErrorGuardado(error instanceof Error ? error.message : 'No pudimos guardar el registro. Volvé a intentar.')
@@ -80,7 +96,8 @@ export default function App() {
     setDatos({ nombre: '', apellido: '', correo: '', telefono: '', consentimiento: false })
     setRespuestas({ servicio: '', proyecto: '', etapa: '' })
     setRespuestaDesafio('')
-    setPreguntaDesafio(null)
+    setPreguntasDesafio([])
+    setIndiceDesafio(0)
     setCargandoDesafio(false)
     setErrorDesafio('')
     setErrorGuardado('')
@@ -89,13 +106,13 @@ export default function App() {
     setPantalla(vistaPreviaRuleta ? 'ruleta' : 'bienvenida')
   }
 
-  if (import.meta.env.DEV && new URLSearchParams(window.location.search).get('pantalla') === 'mision') return <MisionTermoarq />
+  if (import.meta.env.DEV && new URLSearchParams(window.location.search).get('pantalla') === 'mision') return <MisionTermoarq experiencia={new URLSearchParams(window.location.search).get('experiencia') === 'casa' ? 'casa' : new URLSearchParams(window.location.search).get('experiencia') === 'presurizacion' ? 'presurizacion' : undefined} />
 
   if (pantalla === 'mision') return <MisionTermoarq onFinalizar={finalizar} />
 
   if (pantalla === 'ruleta') return <Ruleta key={cicloRuleta} onFinalizar={finalizar} />
   if (pantalla === 'desafio') {
-    return <Desafio pregunta={preguntaDesafio} cargandoPregunta={cargandoDesafio} errorPregunta={errorDesafio}
+    return <Desafio key={preguntaDesafio?.id ?? 'cargando'} numeroPregunta={indiceDesafio + 1} totalPreguntas={preguntasDesafio.length || 1} pregunta={preguntaDesafio} cargandoPregunta={cargandoDesafio} errorPregunta={errorDesafio}
       onReintentar={() => { if (solicitudRef.current) void cargarDesafio(solicitudRef.current) }}
       respuesta={respuestaDesafio} onCambiar={setRespuestaDesafio} onVolver={() => { setErrorGuardado(''); setPantalla('preguntas') }}
       onJugar={() => { void iniciarJuego() }} guardando={guardando} errorGuardado={errorGuardado} />

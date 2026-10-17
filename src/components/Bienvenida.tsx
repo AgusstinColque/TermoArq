@@ -64,7 +64,7 @@ export function Bienvenida({ onComenzar, cargando = false, error = '' }: Bienven
       <header className="bienvenida__cabecera">
         <img
           className="bienvenida__logo"
-          src="/brand/termoarq-logo-aprobado-blanco.svg"
+          src="/brand/termoarq-logo-blanco.svg"
           alt="Termoarq, constructora termomecánica"
           width="300"
           height="53"

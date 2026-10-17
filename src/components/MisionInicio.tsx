@@ -11,7 +11,7 @@ export function MisionInicio({ onExplorar, completados, onFinalizar }: { onExplo
   const [errorImagen, setErrorImagen] = useState(false)
   return <main className="mision mision-inicio">
     <div className="mision__pagina">
-      <header className="mision__cabecera"><img src="/brand/termoarq-logo-aprobado-blanco.svg" alt="Termoarq, constructora termomecánica" /></header>
+      <header className="mision__cabecera"><img src="/brand/termoarq-logo-blanco.svg" alt="Termoarq, constructora termomecánica" /></header>
       <h1 ref={titulo} tabIndex={-1}>Misión Termoarq</h1>
       <p className="mision-inicio__lema">Explorá. Detectá. Transformá.</p>
       <div className="mision-inicio__mapa">

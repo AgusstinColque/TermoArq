@@ -12,7 +12,7 @@ function IconoAdmin({ tipo }: { tipo: 'contactos' | 'configuracion' | 'cuenta' }
 }
 
 export function MarcaAdmin() {
-  return <img className="admin-marca" src="/brand/termoarq-logo-aprobado-blanco.svg" alt="Termoarq, constructora termomecánica" width="300" height="53" />
+  return <img className="admin-marca" src="/brand/termoarq-logo-blanco.svg" alt="Termoarq, constructora termomecánica" width="300" height="53" />
 }
 
 function LoginAdmin({ errorSesion, onReintentar }: { errorSesion: string; onReintentar: () => void }) {

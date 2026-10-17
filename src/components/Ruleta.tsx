@@ -102,7 +102,7 @@ export function Ruleta({ onFinalizar }: { onFinalizar: () => void }) {
 
   return <main className="ruleta" aria-labelledby="ruleta-titulo">
     <div className="ruleta__contenido">
-      <header><img className="ruleta__logo" src="/brand/termoarq-logo-aprobado-blanco.svg" alt="Termoarq, constructora termomecánica" width="300" height="53" /></header>
+      <header><img className="ruleta__logo" src="/brand/termoarq-logo-blanco.svg" alt="Termoarq, constructora termomecánica" width="300" height="53" /></header>
       <h1 id="ruleta-titulo" ref={tituloRef} tabIndex={-1}>Activá tu premio.</h1>
       <p className="ruleta__intro">Un toque. Un giro. Una sorpresa.</p>
       <div className={`ruleta__escenario ruleta__escenario--${fase}`}>

@@ -77,7 +77,7 @@ function DesafioCasa({ pregunta, respuesta, completados, onResponder, onVolver }
     <div className="casa-desafio__contenido">
       <header className="casa-desafio__cabecera">
         {pregunta.ambiente !== 'escaleras' && <button type="button" onClick={onVolver} aria-label="Volver a los ambientes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4m6-6-6 6 6 6"/></svg></button>}
-        <img src="/brand/termoarq-logo-aprobado-blanco.svg" alt="Termoarq" width="300" height="53"/>
+        <img src="/brand/termoarq-logo-blanco.svg" alt="Termoarq" width="300" height="53"/>
       </header>
       <h1 id="casa-titulo" ref={titulo} tabIndex={-1}>Misión Termoarq</h1>
       <p className="casa-desafio__progreso">{pregunta.ambiente === 'escaleras' ? 'Presurización de escaleras · ' + (resuelto ? 'Desafío resuelto' : 'Una pregunta para proteger la evacuación') : completados.length + ' de 2 ambientes explorados'}</p>

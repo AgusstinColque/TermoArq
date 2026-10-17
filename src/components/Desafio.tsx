@@ -55,7 +55,7 @@ export function Desafio({ numeroPregunta = 1, totalPreguntas = 1, pregunta, carg
           <span className="datos-cliente__paso datos-cliente__paso--activo" />
         </div>
       </div>
-      <img className="datos-cliente__logo" src="/brand/termoarq-logo-aprobado-blanco.svg" alt="Termoarq, constructora termomecánica" width="300" height="53" />
+      <img className="datos-cliente__logo" src="/brand/termoarq-logo-blanco.svg" alt="Termoarq, constructora termomecánica" width="300" height="53" />
       {!pregunta ? (
         <>
           <h1 id="desafio-titulo" ref={tituloRef} tabIndex={-1}>Antes de jugar,<br />un desafío.</h1>

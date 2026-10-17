@@ -8,7 +8,7 @@ export function PremioMision({ indice, onFinalizar }: { indice: number; onFinali
   useEffect(() => { window.scrollTo(0, 0); titulo.current?.focus({ preventScroll: true }) }, [])
   return <main className="mision premio-mision" aria-labelledby="mision-premio-titulo">
     <div className="premio-mision__contenido">
-      <img className="premio-mision__logo" src="/brand/termoarq-logo-aprobado-blanco.svg" alt="Termoarq" width="300" height="53"/>
+      <img className="premio-mision__logo" src="/brand/termoarq-logo-blanco.svg" alt="Termoarq" width="300" height="53"/>
       <h1 id="mision-premio-titulo" ref={titulo} tabIndex={-1}>¡Misión cumplida!</h1>
       <p className="premio-mision__intro">Completaste la experiencia y ganaste un premio.</p>
       <div className="premio-mision__resultado">

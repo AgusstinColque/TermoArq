@@ -10,8 +10,8 @@ import '../styles/mision.css'
 import '../styles/misionCasa.css'
 
 
-function sortear(ambiente: AmbienteCasa): PreguntaCasa {
-  const banco = preguntasCasa.filter(pregunta => pregunta.ambiente === ambiente)
+function sortear(ambiente: AmbienteCasa, excluir?: number): PreguntaCasa {
+  const banco = preguntasCasa.filter(pregunta => pregunta.ambiente === ambiente && pregunta.id !== excluir)
   const muestra = new Uint32Array(1)
   const limite = Math.floor(4294967296 / banco.length) * banco.length
   do { crypto.getRandomValues(muestra) } while (muestra[0]! >= limite)
@@ -50,16 +50,27 @@ function ExperienciaSeleccionada({ onFinalizar, experiencia }: { onFinalizar: ()
     setRespuestas({})
     setAmbiente(null)
   }
-  if (experiencia === 'presurizacion') return <DesafioCasa pregunta={partida.escaleras} respuesta={respuestas.escaleras}
-    completados={respuestas.escaleras === undefined ? [] : ['escaleras']}
-    onResponder={respuesta => setRespuestas(actual => ({ ...actual, escaleras: respuesta }))} onVolver={onFinalizar} />
+  if (experiencia === 'presurizacion') return <DesafioPresurizacion onFinalizar={onFinalizar} />
   if (!ambiente) return <MisionInicio completados={completados} onExplorar={setAmbiente} onFinalizar={finalizar} />
   return <DesafioCasa key={ambiente} pregunta={partida[ambiente]} respuesta={respuestas[ambiente]}
     completados={completados} onResponder={respuesta => setRespuestas(actual => ({ ...actual, [ambiente]: respuesta }))}
     onVolver={() => setAmbiente(null)} />
 }
-function DesafioCasa({ pregunta, respuesta, completados, onResponder, onVolver }: {
-  pregunta: PreguntaCasa; respuesta?: OpcionCasa; completados: AmbienteCasa[]; onResponder: (respuesta: OpcionCasa) => void; onVolver: () => void
+function DesafioPresurizacion({ onFinalizar }: { onFinalizar: () => void }) {
+  const [preguntas] = useState(() => {
+    const primera = sortear('escaleras')
+    return [primera, sortear('escaleras', primera.id)] as const
+  })
+  const [paso, setPaso] = useState<0 | 1>(0)
+  const [respuestas, setRespuestas] = useState<Partial<Record<number, OpcionCasa>>>({})
+  const pregunta = preguntas[paso]
+  return <DesafioCasa key={pregunta.id} pregunta={pregunta} numeroPregunta={paso + 1}
+    respuesta={respuestas[pregunta.id]} completados={[]}
+    onResponder={respuesta => setRespuestas(actual => ({ ...actual, [pregunta.id]: respuesta }))}
+    onVolver={() => { if (respuestas[pregunta.id] === undefined) return; if (paso === 0) setPaso(1); else onFinalizar() }} />
+}
+function DesafioCasa({ pregunta, respuesta, completados, onResponder, onVolver, numeroPregunta = 1 }: {
+  numeroPregunta?: number; pregunta: PreguntaCasa; respuesta?: OpcionCasa; completados: AmbienteCasa[]; onResponder: (respuesta: OpcionCasa) => void; onVolver: () => void
 }) {
   const titulo = useRef<HTMLHeadingElement>(null)
   const feedback = useRef<HTMLHeadingElement>(null)
@@ -80,7 +91,7 @@ function DesafioCasa({ pregunta, respuesta, completados, onResponder, onVolver }
         <img src="/brand/termoarq-logo-blanco.svg" alt="Termoarq" width="300" height="53"/>
       </header>
       <h1 id="casa-titulo" ref={titulo} tabIndex={-1}>Misión Termoarq</h1>
-      <p className="casa-desafio__progreso">{pregunta.ambiente === 'escaleras' ? 'Presurización de escaleras · ' + (resuelto ? 'Desafío resuelto' : 'Una pregunta para proteger la evacuación') : completados.length + ' de 2 ambientes explorados'}</p>
+      <p className="casa-desafio__progreso">{pregunta.ambiente === 'escaleras' ? 'Presurización de escaleras · Pregunta ' + numeroPregunta + ' de 2' : completados.length + ' de 2 ambientes explorados'}</p>
       <div className={'casa-desafio__escena casa-desafio__escena--' + pregunta.ambiente}>
         {pregunta.ambiente === 'escaleras'
           ? <EscenaEscaleras activa={resuelto} />
@@ -98,7 +109,7 @@ function DesafioCasa({ pregunta, respuesta, completados, onResponder, onVolver }
           {respuesta !== pregunta.correcta && <p>Elegiste: {pregunta.opciones.find(opcion => opcion.id === respuesta)?.texto}</p>}
           <p><strong>Respuesta correcta:</strong> {pregunta.opciones.find(opcion => opcion.id === pregunta.correcta)?.texto}</p>
           <p>{pregunta.explicacion}</p>
-          <button type="button" onClick={onVolver}>{pregunta.ambiente === 'escaleras' ? 'Finalizar experiencia' : completados.length === 2 ? 'Completar misión' : 'Seguir explorando'}</button>
+          <button type="button" onClick={onVolver}>{pregunta.ambiente === 'escaleras' ? (numeroPregunta === 1 ? 'Siguiente pregunta' : 'Ver mi premio') : completados.length === 2 ? 'Completar misión' : 'Seguir explorando'}</button>
         </div>}
       </section>
       <footer></footer>

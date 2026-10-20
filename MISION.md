@@ -46,3 +46,6 @@ Ruleta requiere dos preguntas distintas del mazo de Supabase; Misión conserva u
 
 ## Premio al completar Misión
 Casa y presurización terminan en PremioMision antes de reiniciar la participación. Reutiliza las seis opciones, íconos, titulares, textos de retiro y sortearPremio de la ruleta (probabilidad uniforme). Un único sorteo por cierre; Finalizar entrega el control al flujo público o reinicia la vista de desarrollo. Se mantiene el carácter local de prueba de los premios, sin stock, persistencia o validación de entrega adicionales. La ruleta permanece intacta.
+
+## Dos preguntas en presurización
+Banco 10–22: se agregan las diez preguntas educativas 13–22 del DOCX de Ari con sus respuestas y explicaciones originales. Se sortean dos distintas sin reposición, estables durante la participación. Cada pregunta remonta su escena, reiniciando humo, ventilador y aire limpio. Primera respuesta → explicación → Siguiente pregunta; segunda respuesta → explicación → Ver mi premio. Casa y desbloqueo general sin cambios.

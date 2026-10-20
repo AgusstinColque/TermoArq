@@ -33,4 +33,4 @@
 .mision-inicio__escaleras{max-width:680px;margin:0 auto;padding:10px 24px 40px;display:flex;gap:28px;align-items:center;color:#dfeff7}.mision-inicio__escaleras img{width:32%;height:auto}.mision-inicio__escaleras h2{margin:0 0 10px;font-size:clamp(22px,4vw,32px)}.mision-inicio__escaleras p{line-height:1.5}.mision-inicio__escaleras button{padding:16px 22px;min-height:48px;background:#dfeff7;color:#164863;border:0;border-radius:10px;font:inherit;font-weight:700;cursor:pointer}.mision-inicio__escaleras button:disabled{opacity:.65;cursor:default}.escena-escaleras{width:min(100%,560px);margin:auto}.escena-escaleras iframe{display:block;width:100%;aspect-ratio:1200/1640;border:0;background:transparent}
 
 .escena-escaleras iframe{aspect-ratio:auto;height:auto;min-height:0;}
- .escena-escaleras{container-type:inline-size}.escena-escaleras iframe{height:calc(112cqw + 170px)}
+ .escena-escaleras{container-type:inline-size}.escena-escaleras iframe{height:112cqw}

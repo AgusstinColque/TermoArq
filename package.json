@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test:db": "node scripts/test-registro.mjs",
     "test:desafio": "node --experimental-strip-types scripts/test-desafio.mjs",
-    "test:admin": "node scripts/test-admin.mjs && node --experimental-strip-types scripts/test-admin-domain.mjs && node --experimental-strip-types scripts/test-admin-excel.mjs"
+    "test:admin": "node scripts/test-admin.mjs && node --experimental-strip-types scripts/test-admin-domain.mjs && node --experimental-strip-types scripts/test-admin-excel.mjs",
+    "test:catalogo": "node --experimental-strip-types scripts/test-catalogo.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.3",

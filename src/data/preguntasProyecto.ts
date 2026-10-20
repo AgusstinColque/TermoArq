@@ -19,6 +19,10 @@ export const preguntasProyecto = [
       {
         "valor": "presurizacion_escalera",
         "texto": "Presurización de escalera"
+      },
+      {
+        "valor": "construccion",
+        "texto": "Construcción"
       }
     ]
   },

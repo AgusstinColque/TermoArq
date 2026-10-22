@@ -1,4 +1,4 @@
-import { sortearPremio } from '../domain/ruleta'
+import { obtenerPremio } from '../services/premios'
 import { createElement, useEffect, useId, useRef, useState } from 'react'
 import { disenoRuleta, simboloRuleta } from '../data/ruletaDiseno'
 import '../styles/ruleta.css'
@@ -18,7 +18,7 @@ function SimboloMarca() {
 
 
 
-export function Ruleta({ onFinalizar }: { onFinalizar: () => void }) {
+export function Ruleta({ onFinalizar, solicitud }: { onFinalizar: () => void; solicitud?: string | null }) {
   const prefijo = `turbina-${useId().replace(/:/g, '')}`
   const material = (nombre: string) => `url(#${prefijo}-${nombre})`
   const [fase, setFase] = useState<Fase>('lista')
@@ -56,11 +56,11 @@ export function Ruleta({ onFinalizar }: { onFinalizar: () => void }) {
     setPremio(null)
     setFase('activando')
     const reducido = matchMedia('(prefers-reduced-motion: reduce)').matches
-    const indice = sortearPremio()
-    // Geometría original: centro del borde de cada aspa en -108 + índice * 60.
-    const objetivo = 18 - indice * 60
-    const siguiente = angulo + (reducido ? 360 : 1800) + ((objetivo - angulo) % 360 + 360) % 360
     try {
+      const indice = await obtenerPremio(solicitud)
+      if (!activoRef.current) return
+      const objetivo = 18 - indice * 60
+      const siguiente = angulo + (reducido ? 360 : 1800) + ((objetivo - angulo) % 360 + 360) % 360
       await pausar(180)
       if (!activoRef.current) return
       setFase('girando')

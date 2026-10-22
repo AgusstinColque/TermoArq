@@ -18,6 +18,7 @@ const vistaPreviaDatos = import.meta.env.DEV && new URLSearchParams(window.locat
 export default function App() {
   const [pantalla, setPantalla] = useState<'bienvenida' | 'datos' | 'preguntas' | 'desafio' | 'ruleta' | 'mision'>(vistaPreviaRuleta ? 'ruleta' : vistaPreviaDatos ? 'datos' : 'bienvenida')
   const [cicloRuleta, setCicloRuleta] = useState(0)
+  const [solicitudJuego, setSolicitudJuego] = useState<string | null>(null)
   const [datos, setDatos] = useState<DatosContacto>({ nombre: '', apellido: '', correo: '', telefono: '', consentimiento: false })
   const [respuestas, setRespuestas] = useState<RespuestasProyecto>({ servicio: '', proyecto: '', etapa: '' })
   const [respuestaDesafio, setRespuestaDesafio] = useState('')
@@ -76,6 +77,7 @@ export default function App() {
         setRespuestaDesafio('')
         return
       }
+      setSolicitudJuego(solicitudRef.current)
       setPantalla(juego)
     } catch (error) {
       setErrorGuardado(error instanceof Error ? error.message : 'No pudimos guardar el registro. Volvé a intentar.')
@@ -101,6 +103,7 @@ export default function App() {
     setCargandoDesafio(false)
     setErrorDesafio('')
     setErrorGuardado('')
+    setSolicitudJuego(null)
     solicitudRef.current = null
     if (vistaPreviaRuleta) setCicloRuleta(ciclo => ciclo + 1)
     setPantalla(vistaPreviaRuleta ? 'ruleta' : 'bienvenida')
@@ -108,9 +111,9 @@ export default function App() {
 
   if (import.meta.env.DEV && new URLSearchParams(window.location.search).get('pantalla') === 'mision') return <MisionTermoarq experiencia={new URLSearchParams(window.location.search).get('experiencia') === 'casa' ? 'casa' : new URLSearchParams(window.location.search).get('experiencia') === 'presurizacion' ? 'presurizacion' : undefined} />
 
-  if (pantalla === 'mision') return <MisionTermoarq onFinalizar={finalizar} />
+  if (pantalla === 'mision') return <MisionTermoarq solicitud={solicitudJuego} onFinalizar={finalizar} />
 
-  if (pantalla === 'ruleta') return <Ruleta key={cicloRuleta} onFinalizar={finalizar} />
+  if (pantalla === 'ruleta') return <Ruleta solicitud={solicitudJuego} key={cicloRuleta} onFinalizar={finalizar} />
   if (pantalla === 'desafio') {
     return <Desafio key={preguntaDesafio?.id ?? 'cargando'} numeroPregunta={indiceDesafio + 1} totalPreguntas={preguntasDesafio.length || 1} pregunta={preguntaDesafio} cargandoPregunta={cargandoDesafio} errorPregunta={errorDesafio}
       onReintentar={() => { if (solicitudRef.current) void cargarDesafio(solicitudRef.current) }}

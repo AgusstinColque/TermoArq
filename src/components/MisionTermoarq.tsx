@@ -1,5 +1,5 @@
 import { PremioMision } from './PremioMision'
-import { sortearPremio } from '../domain/ruleta'
+import { obtenerPremio } from '../services/premios'
 import { EscenaEscaleras } from './EscenaEscaleras'
 import { useEffect, useRef, useState } from 'react'
 import { preguntasCasa, type AmbienteCasa, type OpcionCasa, type PreguntaCasa } from '../data/misionCasa'
@@ -23,21 +23,32 @@ function sortearExperiencia(): ExperienciaMision {
   crypto.getRandomValues(muestra)
   return muestra[0]! % 2 === 0 ? 'casa' : 'presurizacion'
 }
-export function MisionTermoarq({ onFinalizar, experiencia }: { onFinalizar?: () => void; experiencia?: ExperienciaMision }) {
+export function MisionTermoarq({ onFinalizar, experiencia, solicitud }: { onFinalizar?: () => void; experiencia?: ExperienciaMision; solicitud?: string | null }) {
   const [sesion, setSesion] = useState(() => ({ experiencia: experiencia ?? sortearExperiencia(), ciclo: 0 }))
   const [premio, setPremio] = useState<number | null>(null)
   const premioAsignado = useRef<number | null>(null)
-  const mostrarPremio = () => {
-    if (premioAsignado.current === null) premioAsignado.current = sortearPremio()
-    setPremio(premioAsignado.current)
+  const bloqueoPremio = useRef(false)
+  const [cerrando, setCerrando] = useState(false)
+  const [errorPremio, setErrorPremio] = useState('')
+  const mostrarPremio = async () => {
+    if (bloqueoPremio.current) return
+    bloqueoPremio.current = true
+    setCerrando(true); setErrorPremio('')
+    try {
+      if (premioAsignado.current === null) premioAsignado.current = await obtenerPremio(solicitud)
+      setPremio(premioAsignado.current)
+    } catch (error) { setErrorPremio(error instanceof Error ? error.message : 'No pudimos confirmar tu premio. Volvé a intentar.') }
+    finally { bloqueoPremio.current = false }
   }
   if (premio !== null) return <PremioMision indice={premio} onFinalizar={() => {
     if (onFinalizar) { onFinalizar(); return }
+    setCerrando(false)
     premioAsignado.current = null
     setPremio(null)
     setSesion(actual => ({ experiencia: experiencia ?? sortearExperiencia(), ciclo: actual.ciclo + 1 }))
   }} />
-  return <ExperienciaSeleccionada key={sesion.ciclo} experiencia={sesion.experiencia} onFinalizar={mostrarPremio} />
+  if (cerrando) return <main className="mision premio-mision"><div className="premio-mision__contenido"><img className="premio-mision__logo" src="/brand/termoarq-logo-blanco.svg" alt="Termoarq" width="300" height="53"/><h1>Tu misión está completa</h1>{errorPremio ? <><p role="alert">{errorPremio}</p><button type="button" onClick={() => { void mostrarPremio() }}>Reintentar</button></> : <p role="status">Preparando tu premio…</p>}</div></main>
+  return <ExperienciaSeleccionada key={sesion.ciclo} experiencia={sesion.experiencia} onFinalizar={() => { void mostrarPremio() }} />
 }
 function ExperienciaSeleccionada({ onFinalizar, experiencia }: { onFinalizar: () => void; experiencia: ExperienciaMision }) {
   const [partida, setPartida] = useState(() => ({ living: sortear('living'), dormitorio: sortear('dormitorio'), escaleras: sortear('escaleras') }))
